@@ -85,6 +85,8 @@
 
 
 \begin{abstract}
+  Chloe
+
   The abstract paragraph should be indented \nicefrac{1}{2}~inch (3~picas) on
   both the left- and right-hand margins. Use 10~point type, with a vertical
   spacing (leading) of 11~points.  The word \textbf{Abstract} must be centered,
@@ -100,6 +102,7 @@ reading your work.
 
 
 \section{Introduction}
+Gabriel
 
 A description of the motivation behind your work, why
 the task you chose is interesting/important, and a
@@ -111,11 +114,13 @@ section should also make it clear why your deep
 learning approach is reasonable for this problem.
 
 \section{Background and related work}
+Chloe
 
 A summary of the background material that students of
 CSC413 would not already be familiar with. A
 description of related work done in the area, and how
 your approach compares with theirs.
+
 If your project builds on previous work, clearly
 distinguish what they did from what your new
 contribution is. Also, include a 1-2 sentence summary
@@ -126,6 +131,8 @@ project. Using bibtex is annoying at first, but Google
 Scholar can give you the bibtex entries.
 
 \section{Data}
+Taha 
+
 The dataset used in your model. Include any key
 exploratory figures that will help readers evaluate the
 difficulty of your problem and interpret the performance
@@ -137,23 +144,31 @@ TODO: Find another dataset with proofs/numerical data
 
 
 \section{Model architecture}
+Everyone
 
 A description of your (proposed) model architecture.
 Please propose an architecture during the proposal
 phase, but it's okay to change your architecture. In the
 final report, this section should have enough details to
-reproduce the work, including all hyperparameters andXX
-3training settings that you used.
+reproduce the work, including all hyperparameters and 3 training settings that you used.
+
+ 
+Selected model: PaLM2 \\
+Google PaLM2 = transformers + modifications: https://arxiv.org/pdf/2204.02311
+
+Attempt to combine this with PaLM2: \\
+SympyGPT: Transformers for symbolic integration proofs: https://arxiv.org/html/2410.02666v1
+
 
 Better with word problems?
 Architecture: PaLM, GPT4: http://research.google/blog/minerva-solving-quantitative-reasoning-problems-with-language-models/
 
-We could also combine the two models:
-SympyGPT: Transformers for symbolic integration proofs: https://arxiv.org/html/2410.02666v1
+We could also combine the two models (unlikely but look into it):
 
-Google PaLM2: https://arxiv.org/pdf/2204.02311
+Standard Transformers Architecture: https://arxiv.org/abs/1706.03762
 
 \section{Model architecture figure}
+Takia
 
 A figure that helps show the overall model or idea. The
 idea is to make your paper more accessible, especially
@@ -162,6 +177,13 @@ You must create a new figure, not just use someone
 else's, even with attribution. Be careful that all figure
 text are legible, and are approximately the same size
 as the main text.
+
+% \begin{figure}[hbtp]
+%   \centering
+%   \includegraphics[scale=0.6]{./figures/ModalNet-21.png}
+%   \caption{The Transformer - model architecture.}
+%   \label{fig:model-arch}
+% \end{figure}
 
 
 % LEAVE FOR FINAL REPORT
@@ -189,12 +211,14 @@ as the main text.
 % limitations or open problems
 
 \section{Ethical considerations}
+Taha
 
 Potential ethical issues posed by the use or misuse of
 your model. Your report should transparently
 communicate the known or anticipated consequences
 of building and using machine learning models on this
 task.
+
 https://neurips.cc/public/EthicsGuidelines
 
 
@@ -204,6 +228,16 @@ A description of how the work will be divided between
 the team members, and how the team members will be
 working together (e.g. meet every week Tuesday 4-5
 pm).
+
+Chloe - Background and Related Work, Abstract, Model Architecture
+
+Takia - Model Architecture Figure, Model Architecture
+
+Gabriel - Introduction, Model Architecture
+
+Taha - Data, Ethical Considerations, Model Architecture
+
+The team will work on each part, and meet every weekend for additional discussions. 
 
 % LEAVE FOR FINAL REPORT
 % \section{Conclusion}
