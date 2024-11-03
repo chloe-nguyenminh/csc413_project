@@ -5,3 +5,5 @@
 *.out
 *.synctex.gz
 .fuse_hidden*
+*.zip
+data/
