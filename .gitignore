@@ -1,6 +1,19 @@
+# Dataset files
+*.zip
+data/
+
+# LaTeX auxiliary files
 *.aux
-*.fdb_latexmk
-*.fls
 *.log
 *.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
 *.synctex.gz
+*.fuse*
+
+# BibTeX auxiliary files
+*.bbl
+*.blg
