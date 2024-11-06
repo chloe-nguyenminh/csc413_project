@@ -145,7 +145,7 @@ For this project, we decided to use the following datasets:
 
 \href{https://www.kaggle.com/datasets/mathurinache/math-dataset}{{\bf Math Dataset}}
 
-The MATH dataset consists of 12,500 (7,500 training and 5,000 test) problems from mathematics competitions including the AMC 10, AMC 12, AIME, and more. Many of these problems can be collected from \href{https://artofproblemsolving.com/community/c3158\_usa\_contests}{aops.com/community/c3158\_usa\_contests}. These competitions span deades and assess the mathematical problem-solving ability of the best young mathematical talent in the United States.
+The MATH dataset consists of 12,500 (7,500 training and 5,000 test) problems from mathematics competitions including the AMC 10, AMC 12, AIME, and more. Many of these problems can be collected from \href{https://artofproblemsolving.com/community/c3158\_usa\_contests}{aops.com/community/c3158\_usa\_contests}.
 \cite{hendrycksmath2021}
 
 \href{https://huggingface.co/datasets/AI-MO/NuminaMath-CoT}{{\bf NuminaMath-CoT}}
@@ -159,6 +159,8 @@ The Numina Math TIR dataset is a more specific version of the CoT dataset, where
 \cite{numina_math_datasets_TIR}
 
 \subsection{Data Formatting}
+
+Problems and solutions are formatted using LATEX. The usage of LATEX ensures that the data is easily readable and can be used to generate math problems and solutions. The data is also formatted in a way that is easy to parse and process for training the model.
 
 The data for the Math Dataset is formatted as a JSON file, with each problem containing the following fields:
 \begin{itemize}
