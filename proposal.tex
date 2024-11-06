@@ -139,15 +139,50 @@ exploratory figures that will help readers evaluate the
 difficulty of your problem and interpret the performance
 of your model.
 
-https://www.kaggle.com/datasets/mathurinache/math-dataset
+\subsection{Datasets}
+
+For this project, we decided to use the following datasets:
+
+\href{https://www.kaggle.com/datasets/mathurinache/math-dataset}{{\bf Math Dataset}}
+
+The MATH dataset consists of 12,500 (7,500 training and 5,000 test) problems from mathematics competitions including the AMC 10, AMC 12, AIME, and more. Many of these problems can be collected from \href{https://artofproblemsolving.com/community/c3158\_usa\_contests}{aops.com/community/c3158\_usa\_contests}. These competitions span deades and assess the mathematical problem-solving ability of the best young mathematical talent in the United States.
 \cite{hendrycksmath2021}
 
-https://huggingface.co/datasets/AI-MO/NuminaMath-CoT
+\href{https://huggingface.co/datasets/AI-MO/NuminaMath-CoT}{{\bf NuminaMath-CoT}}
+
+The Numina Math CoT dataset has approximately 860k math problems, where each solution is formatted in a Chain of Thought (CoT) manner. The sources of the dataset range from Chinese high school math exercises to US and international mathematics olympiad competition problems.
 \cite{numina_math_datasets_CoT}
 
-https://huggingface.co/datasets/AI-MO/NuminaMath-TIR
+\href{https://huggingface.co/datasets/AI-MO/NuminaMath-TIR}{{\bf NuminaMath-TIR}}
+
+The Numina Math TIR dataset is a more specific version of the CoT dataset, where 70k problems are selected, with a focus on numerical outputs and integers. Tool-integrated reasoning (TIR) plays a crucial role in this dataset, where the solution to each problem is a sequence of steps that can be executed by a computer program.
 \cite{numina_math_datasets_TIR}
 
+\subsection{Data Formatting}
+
+The data for the Math Dataset is formatted as a JSON file, with each problem containing the following fields:
+\begin{itemize}
+  \item problem: The text of the problem
+  \item level: The difficulty level of the problem (Level 1 up to Level 5)
+  \item type: The type of math problem (e.g. algebra, geometry, etc.)
+  \item solution: The solution to the problem
+\end{itemize}
+
+The data for the Numina Math CoT and TIR datasets are formatted as a JSON file, with each problem containing the following fields:
+\begin{itemize}
+  \item An array of objects, where the first object contains
+      \begin{itemize}
+        \item content: The text of the problem
+        \item role: the role assigned to the person who can access this data (user)
+      \end{itemize}
+  \item The second object contains
+      \begin{itemize}
+        \item content: The solution to the problem
+        \item role: the role assigned to the person who can access this data (assistant)
+      \end{itemize}
+\end{itemize}
+
+We intend to use these datasets to train our model to solve mathematical problems. We will preprocess the data into one format, to ensure that can be used by our model. We will also split the test data into validation and test sets to evaluate the performance of our model.
 
 \section{Model architecture}
 Everyone
@@ -227,6 +262,15 @@ task.
 
 https://neurips.cc/public/EthicsGuidelines
 
+\subsection{Ethical Issues}
+One ethical consideration is the potential for the model to be used to cheat on math assignments/homework. This could encourage students to use the model as a shortcut rather than engaging with the material themselves, which would negatively impact a students capacity for critical thinking and problem-solving. 
+
+Another ethical issue is intellectual property rights, as the model is trained on copyrighted data. The model could inadvertently promote plagiarism if it directly provides solutions that students submit as their own, without understanding the learning process. This could lead to academic dishonesty and undermine the integrity of the educational system.
+
+\subsection{Mitigation Strategies}
+To mitigate the first risk, the model should be used as a learning tool rather than a tool for cheating. For example, the model could be used to generate practice problems for students to solve, or to provide explanations for the solutions to problems. This would help students learn and improve their math skills, rather than using the model to cheat. Therefore, while automation can support learning, it is essential that it complements, rather than replaces, active engagement with the educational process.
+
+To mitigate the second risk, the model should be used in a controlled environment where students are guided on how to use the model appropriately. For example, teachers could provide guidelines on how to use the model to check answers or generate practice problems, rather than using it to directly provide solutions. Furthermore, it is crucial to emphasize the value of understanding the material and using tools as aids rather than shortcuts. This would prevent plagiarism and encourage students to engage with the material and develop their problem-solving skills.
 
 \section{Work division}
 
@@ -253,7 +297,7 @@ The team will work on each part, and meet every weekend for additional discussio
 % working together (e.g. meet every week Tuesday 4-5
 % pm).
 
-\bibliographystyle{plain}
-\bibliography{bibliography}
+\bibliographystyle{unsrt}
+\bibliography{references}
 
 \end{document}
