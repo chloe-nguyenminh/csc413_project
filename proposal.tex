@@ -103,16 +103,17 @@ reading your work.
 
 
 \section{Introduction}
-Gabriel
+% Gabriel
 
-A description of the motivation behind your work, why
-the task you chose is interesting/important, and a
-summary of your (proposed) approach. The problem
-that you want to solve should be clearly stated in the
-introduction: especially the input and output of your
-model and the format of the input and output. This
-section should also make it clear why your deep
-learning approach is reasonable for this problem.
+% A description of the motivation behind your work, why
+% the task you chose is interesting/important, and a
+% summary of your (proposed) approach. The problem
+% that you want to solve should be clearly stated in the
+% introduction: especially the input and output of your
+% model and the format of the input and output. This
+% section should also make it clear why your deep
+% learning approach is reasonable for this problem.
+A challenge often faced by students in the computational sciences is learning how to solve logically intensive math questions. Often times the transition from computation focused math to reasoning focused math presents a large learning curve due to the difficulty of developing mathematical intuition and a lack of rigorous step by step answers to compare with. We hope to develop an accessible model that can take in a latex text input of a math problem and output a descriptive and accurate latex text answer output to the problem. Developing models capable of solving this task is an infamously difficult problem (https://arxiv.org/html/2410.02666v1) due to the requirement of consistency and mathematical riqour within the answers outputted by the models. Currently the best models in this area use transformer LLM archetictures with large pretraining datasets. The downsides of these models is that the consistency may be poor due to multiple ways to present the same problem which are treated differently by the model. To solve for this we are incorporating a symbolic model into a transformer LLM architecture to hopefully increase accuracy within our math solving model. We believe this deep learning approach is reasonable as understanding the language of math problems is something suited for transformer LLM models and creating consistency in mathematical reasoning is something that symbolic models are good at. By combining these 2 approaches we hope that it will combine the best of both architectures.  With this work we hope to develop a more robust and helpful model that is able to answer with reason and provide thorough feedback on math questions potential users might have.
 
 \section{Background and related work}
 Chloe
