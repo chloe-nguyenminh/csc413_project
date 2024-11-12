@@ -209,7 +209,7 @@ We intend to use these datasets to train our model to solve mathematical problem
 
 The proposed model aims to combine the strengths of symbolic math-solving with neural language understanding by utilizing a hybrid architecture that integrates \texttt{LaTeX2SymPy} for parsing mathematical expressions, the \texttt{mathBERT} tokenizer and encoder for understanding the natural language problem, \texttt{SymPy} for symbolic manipulation and computation, and a Seq2Seq decoder for generating textual output. The architecture is designed to be lightweight, efficient, and open-source, making it accessible for deployment in a wide range of applications.
 
-\subsection{1. Input Layer: LaTeX2SymPy Parsing}
+\subsection{Input Layer: LaTeX2SymPy Parsing}
 
 The input to the model is a natural language mathematical problem, often expressed in LaTeX format. To handle the structured mathematical expressions present in LaTeX format, we use \texttt{LaTeX2SymPy}. This component parses the LaTeX input into a symbolic expression that can be processed by the subsequent layers.
 
@@ -220,7 +220,7 @@ The input to the model is a natural language mathematical problem, often express
 
 This parsing step ensures that the mathematical problem is represented in a structured and mathematically accurate form, making it ready for further symbolic operations.
 
-\subsection{2. SymPy Solver}
+\subsection{SymPy Solver}
 
 Once the problem is tokenized and embedded by the MathBERT encoder, it is passed to the \texttt{SymPy} Solver for symbolic computation. \texttt{SymPy} is a Python library dedicated to symbolic mathematics, and its role in this architecture is twofold:
 
@@ -232,7 +232,7 @@ Once the problem is tokenized and embedded by the MathBERT encoder, it is passed
 
 This integration ensures that the model not only understands the mathematical structure of the problem but also can derive precise and reliable solutions when applicable.
 
-\subsection{3. MathBERT Tokenizer and Encoder}
+\subsection{MathBERT Tokenizer and Encoder}
 
 The parsed mathematical expression is fed into a \texttt{MathBERT} tokenizer and encoder, which is a specialized version of BERT fine-tuned for mathematical tasks \cite{mathbert}. MathBERT has been trained to handle both natural language and symbolic mathematical notation, which allows it to effectively process math-related queries and understand the underlying structure of the problem. The steps involved are as follows:
 
@@ -241,7 +241,7 @@ The parsed mathematical expression is fed into a \texttt{MathBERT} tokenizer and
     \item \textbf{Contextual Embedding:} The tokenized input is passed through the \texttt{MathBERT} encoder, which generates contextual embeddings for each token. These embeddings capture semantic relationships between mathematical operations, variables, and their corresponding natural language descriptions. The encoder's attention mechanism enables the model to focus on relevant parts of the input when generating solutions.
 \end{itemize}
 
-\subsection{4. Seq2Seq Decoder}
+\subsection{Seq2Seq Decoder}
 
 The final step of the architecture involves the use of a Seq2Seq decoder, which generates the natural language output from the symbolic solution obtained from \texttt{SymPy}. The decoder is designed to convert symbolic results back into human-readable text, making the solution interpretable and usable for end-users.
 
@@ -252,7 +252,7 @@ The final step of the architecture involves the use of a Seq2Seq decoder, which 
 
 This step integrates both symbolic manipulation and natural language generation, ensuring that the solution is not only mathematically accurate but also linguistically appropriate.
 
-\subsection{7. Advantages of the Proposed Architecture}
+\subsection{Advantages of the Proposed Architecture}
 
 The hybrid architecture offers several advantages:
 
