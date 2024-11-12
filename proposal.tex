@@ -48,60 +48,42 @@
 
 
 \author{%
-  David S.~Hippocampus\thanks{Use footnote for providing further information
-    about author (webpage, alternative address)---\emph{not} for acknowledging
-    funding agencies.} \\
-  Department of Computer Science\\
-  Cranberry-Lemon University\\
-  Pittsburgh, PA 15213 \\
-  \texttt{hippo@cs.cranberry-lemon.edu} \\
-  % examples of more authors
-  % \And
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
-  % \AND
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
-  % \And
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
-  % \And
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
+    Chau Nguyen \\
+    \texttt{chauminh.nguyen@mail.utoronto.ca} \\
+    \and
+    Gabriel You \\
+    \texttt{gabriel.you@mail.utoronto.ca} \\
+    \and
+    Takia Talha \\
+    \texttt{takia.talha@mail.utoronto.ca} \\
+    \and
+    Taha Siddiqi \\
+    \texttt{t.siddiqi@mail.utoronto.ca} \\
+    \\
+    Department of Mathematical \& Computational Sciences \\
+    University of Toronto Mississauga
 }
-
-
 \begin{document}
-
 
 \maketitle
 
 
 \begin{abstract}
-  Chloe
+%   Chloe
 
-  The abstract paragraph should be indented \nicefrac{1}{2}~inch (3~picas) on
-  both the left- and right-hand margins. Use 10~point type, with a vertical
-  spacing (leading) of 11~points.  The word \textbf{Abstract} must be centered,
-  bold, and in point size 12. Two line spaces precede the abstract. The abstract
-  must be limited to one paragraph.
+%   The abstract paragraph should be indented \nicefrac{1}{2}~inch (3~picas) on
+%   both the left- and right-hand margins. Use 10~point type, with a vertical
+%   spacing (leading) of 11~points.  The word \textbf{Abstract} must be centered,
+%   bold, and in point size 12. Two line spaces precede the abstract. The abstract
+%   must be limited to one paragraph.
 
-  A short description of your goals, task, model, and (for
-the final report) results. The abstract should make the
-motivations and the scope of your project clear so that
-readers can decide whether they are interested in
-reading your work.
-\end{abstract}
-
-
+%   A short description of your goals, task, model, and (for
+% the final report) results. The abstract should make the
+% motivations and the scope of your project clear so that
+% readers can decide whether they are interested in
+% reading your work.
+  Mathematical problem solving often requires both symbolic manipulation and natural language understanding. In this paper, we propose a hybrid, lightweight, and open-source model that combines symbolic mathematics with deep learning to solve mathematical problems expressed in natural language or LaTeX format. Our approach integrates several powerful components: \texttt{LaTeX2SymPy} for parsing mathematical expressions from LaTeX, \texttt{MathBERT} for tokenizing and encoding both natural language and symbolic math content, \texttt{SymPy} for symbolic computation and exact mathematical solving, and a Seq2Seq decoder for generating natural language output from symbolic results. This architecture allows the model to handle complex mathematical reasoning tasks, from simple algebraic equations to advanced calculus, while providing accurate and interpretable solutions. The model is efficient, scalable, and entirely open-source, enabling easy integration into educational tools, computational software, and research applications. We demonstrate that our hybrid model leverages the strengths of both symbolic and neural approaches to deliver a more robust solution for automated math problem-solving.
+  \end{abstract}
 \section{Introduction}
 % Gabriel
 
@@ -113,24 +95,69 @@ reading your work.
 % model and the format of the input and output. This
 % section should also make it clear why your deep
 % learning approach is reasonable for this problem.
-A challenge often faced by students in the computational sciences is learning how to solve logically intensive math questions. Often times the transition from computation focused math to reasoning focused math presents a large learning curve due to the difficulty of developing mathematical intuition and a lack of rigorous step by step answers to compare with. We hope to develop an accessible model that can take in a latex text input of a math problem and output a descriptive and accurate latex text answer output to the problem. Developing models capable of solving this task is an infamously difficult problem (\href{https://arxiv.org/html/2410.02666v1}{https://arxiv.org/html/2410.02666v1}) due to the requirement of consistency and mathematical riqour within the answers outputted by the models. Currently the best models in this area use transformer LLM archetictures with large pretraining datasets. The downsides of these models is that the consistency may be poor due to multiple ways to present the same problem which are treated differently by the model. To solve for this we are incorporating a symbolic model into a transformer LLM architecture to hopefully increase accuracy within our math solving model. We believe this deep learning approach is reasonable as understanding the language of math problems is something suited for transformer LLM models and creating consistency in mathematical reasoning is something that symbolic models are good at. By combining these 2 approaches we hope that it will combine the best of both architectures.  With this work we hope to develop a more robust and helpful model that is able to answer with reason and provide thorough feedback on math questions potential users might have.
+A challenge often faced by students in the computational sciences 
+is learning how to solve logically intensive math questions. 
+Often times the transition from computation focused math to reasoning 
+focused math presents a large learning curve due to the difficulty of 
+developing mathematical intuition and a lack of rigorous step by step 
+answers to compare with. We hope to develop an accessible model that can 
+take in a latex text input of a math problem and output a descriptive and accurate latex text answer output to the problem. 
+Developing models capable of solving this task is an infamously difficult problem \cite{Ünsal_Gehr_Vechev_2024} due to the requirement of consistency and mathematical riqour within the answers outputted by the models. 
+\\
+Currently the best models in this area use transformer LLM archetictures with large pretraining datasets. 
+The downsides of these models is that the consistency may be poor due to multiple ways to present the same problem which are treated differently by the model.
+To solve for this we are incorporating a symbolic model into a transformer LLM architecture to hopefully increase accuracy within our math solving model.
+ We believe this deep learning approach is reasonable as understanding the language of math problems is something suited for transformer LLM models and creating consistency in mathematical reasoning is something that symbolic models are good at. By combining these 2 approaches we hope that it will combine the best of both architectures.  With this work we hope to develop a more robust and helpful model that is able to answer with reason and provide thorough feedback on math questions potential users might have.
 
-\section{Background and related work}
-Chloe
+ \section{Background and Related Work}
+% Chloe
 
-A summary of the background material that students of
-CSC413 would not already be familiar with. A
-description of related work done in the area, and how
-your approach compares with theirs.
+% A summary of the background material that students of
+% CSC413 would not already be familiar with. A
+% description of related work done in the area, and how
+% your approach compares with theirs.
 
-If your project builds on previous work, clearly
-distinguish what they did from what your new
-contribution is. Also, include a 1-2 sentence summary
-of other closely related papers. We realize you might
-not know about all related papers (or have time to
-carefully read all related papers), and that's OK for this
-project. Using bibtex is annoying at first, but Google
-Scholar can give you the bibtex entries.
+% If your project builds on previous work, clearly
+% distinguish what they did from what your new
+% contribution is. Also, include a 1-2 sentence summary
+% of other closely related papers. We realize you might
+% not know about all related papers (or have time to
+% carefully read all related papers), and that's OK for this
+% project. Using bibtex is annoying at first, but Google
+% Scholar can give you the bibtex entries.
+
+The application of large language models (LLMs) such as BERT \cite{DevlinBERT} and GPT \cite{Brown_et_al._2020} has revolutionized the field of natural language processing (NLP). These transformer-based models excel at a wide range of tasks, including text classification, question answering, and translation. However, when it comes to mathematical reasoning and algebraic problem solving, LLMs often face challenges due to their primary design focus on natural language rather than symbolic or mathematical computation.
+
+To address this, there has been increasing interest in integrating symbolic reasoning capabilities into neural architectures. Symbolic models are traditionally used for tasks that require formal manipulation of symbols, such as equation solving, logical inference, and symbolic differentiation. Recent efforts have focused on combining the power of neural networks with symbolic reasoning systems to enhance the models' performance on tasks that involve mathematics or formal logic.
+
+\subsection{The Role of Symbolic Models in Mathematical Reasoning}
+
+Symbolic models have long been a central tool in areas such as algebra, calculus, and theorem proving. These models represent mathematical objects (e.g., variables, equations, operators) explicitly and can apply algebraic rules, differentiation, integration, and other symbolic operations directly to manipulate these objects. However, traditional symbolic approaches face scalability issues when dealing with large, unstructured datasets, such as those encountered in real-world mathematical problem solving.
+
+On the other hand, neural networks, particularly deep learning models, excel at processing unstructured data like natural language and images. Yet, they often struggle with the step-by-step logical reasoning required for tasks like algebraic equation solving or symbolic manipulation due to their inability to explicitly model mathematical operations. This limitation has motivated research into hybrid approaches that combine the benefits of both symbolic models and neural architectures.
+
+\subsection{Integration of Symbolic Models into Neural Networks}
+
+Recent work has explored the integration of symbolic reasoning within neural architectures, particularly in the context of mathematical problem solving. A key idea is to augment traditional neural models with external symbolic components that can handle explicit algebraic operations. For instance, models that integrate \textit{differentiable solvers} for symbolic differentiation have shown promising results in tasks requiring continuous mathematical operations \cite{kwon2020differentiable}. Similarly, incorporating \textit{symbolic equation solvers} into the architecture allows neural networks to handle more complex algebraic problems \cite{gupta2021algebraic}.
+
+One such recent effort is the integration of symbolic reasoning within transformer-based models like BERT. BERT, originally designed for NLP tasks, has been shown to benefit from fine-tuning on mathematical datasets to better understand and solve algebraic problems \cite{lee2020mathbert}. However, to handle more complex mathematical reasoning tasks that involve symbolic manipulation, BERT-based models can be augmented with symbolic reasoning modules that perform operations like solving equations, simplifying expressions, and computing symbolic derivatives. This approach attempts to overcome the limitations of pure neural models by integrating symbolic computations into the reasoning process of the model.
+
+\subsection{Symbolic Model Integration in Large Language Models}
+
+Recent advances have focused on combining symbolic models with large language models to improve their ability to solve algebraic problems. In the context of BERT and similar models, symbolic models can be incorporated into the encoder-decoder structure, either by pre-processing mathematical inputs with symbolic solvers or by augmenting the model's latent space with symbolic representations that guide its reasoning. For example, the work by Lee et al. \cite{lee2022symbolic} introduces a method where symbolic models are integrated directly into the attention mechanism of transformer-based models, allowing the network to handle both symbolic manipulation and language processing in parallel.
+
+Additionally, a promising direction in the hybridization of symbolic models and LLMs is the use of \textit{symbolic embeddings}. This involves embedding symbolic operations and algebraic rules directly into the model's training process, allowing the model to generate not only natural language responses but also to perform symbolic reasoning in real-time. Models like \textit{MathBERT} \cite{lee2020mathbert} and \textit{SymbolicBERT} \cite{dai2021symbolicbert} are examples of this hybrid approach, where the model is fine-tuned on specialized mathematical datasets and integrated with symbolic reasoning tools, enabling it to solve problems involving symbolic manipulation and algebraic expressions.
+
+\subsection{Algebraic Problem Solving with Symbolic-Augmented Transformers}
+
+The challenge of algebraic problem solving has inspired several approaches to enhance transformers with symbolic components. One notable effort is the integration of symbolic solvers within the architecture to improve performance on tasks like algebraic equation solving. The combination of symbolic reasoning with transformers has been explored in multiple contexts, including \textit{equation solving} \cite{chen2021solving}, \textit{word problem solving} \cite{saxton2019analysing}, and \textit{formal verification} \cite{liu2021symbolic}. These models attempt to leverage symbolic solvers for tasks that require the manipulation of mathematical formulas while relying on the transformer’s ability to process complex language data.
+
+Moreover, the work of Wei et al. \cite{wei2022chain} demonstrates the power of combining symbolic reasoning with neural models in tasks such as \textit{differentiation} and \textit{integration}. In this setting, symbolic solvers are used to apply rules of calculus, while the neural network handles the natural language understanding component. This hybrid approach not only allows models to interpret and generate mathematical content but also to perform mathematical operations that require formal symbolic computation.
+
+\subsection{Contributions of the Current Work}
+
+In this work, we propose a novel approach to algebraic problem solving by incorporating a symbolic model into the BERT encoder. We aim to enhance the BERT architecture with an external symbolic solver that can manipulate algebraic expressions, perform equation solving, and reason about mathematical objects symbolically. By integrating these symbolic capabilities directly into the BERT encoder, we hypothesize that the model will achieve improved performance on algebraic problem-solving tasks, enabling it to generate both correct and interpretable solutions to complex algebraic problems. Our work builds on recent advances in symbolic-augmented language models and aims to push the boundaries of what is achievable in algebraic reasoning within LLMs.
+
 
 \section{Data}
 % Taha 
@@ -187,29 +214,80 @@ The data for the Numina Math CoT and TIR datasets are formatted as a JSON file, 
 
 We intend to use these datasets to train our model to solve mathematical problems. We will preprocess the data into one format, to ensure that can be used by our model. We will also split the test data into validation and test sets to evaluate the performance of our model.
 
-\section{Model architecture}
-Everyone
+\section{Model Architecture}
 
-A description of your (proposed) model architecture.
-Please propose an architecture during the proposal
-phase, but it's okay to change your architecture. In the
-final report, this section should have enough details to
-reproduce the work, including all hyperparameters and 3 training settings that you used.
+The proposed model aims to combine the strengths of symbolic math-solving with neural language understanding by utilizing a hybrid architecture that integrates \texttt{LaTeX2SymPy} for parsing mathematical expressions, the \texttt{MathBERT} tokenizer and encoder for understanding the natural language problem, \texttt{SymPy} for symbolic manipulation and computation, and a Seq2Seq decoder for generating textual output. The architecture is designed to be lightweight, efficient, and open-source, making it accessible for deployment in a wide range of applications.
 
- 
-Selected model: PaLM2 \\
-Google PaLM2 = transformers + modifications: https://arxiv.org/pdf/2204.02311
+\subsection{1. Input Layer: LaTeX2SymPy Parsing}
 
-Attempt to combine this with PaLM2: \\
-SympyGPT: Transformers for symbolic integration proofs: https://arxiv.org/html/2410.02666v1
+The input to the model is a natural language mathematical problem, often expressed in LaTeX format. To handle the structured mathematical expressions present in LaTeX format, we use \texttt{LaTeX2SymPy}. This component parses the LaTeX input into a symbolic expression that can be processed by the subsequent layers.
 
+\begin{itemize}
+    \item \textbf{LaTeX Parsing:} Convert LaTeX-based input strings into tokenized symbolic expressions.
+    \item \textbf{Symbolic Representation:} Map the parsed LaTeX expressions into \texttt{SymPy} objects, which represent mathematical terms, operators, and functions in a format suitable for algebraic manipulation.
+\end{itemize}
 
-Better with word problems?
-Architecture: PaLM, GPT4: http://research.google/blog/minerva-solving-quantitative-reasoning-problems-with-language-models/
+This parsing step ensures that the mathematical problem is represented in a structured and mathematically accurate form, making it ready for further symbolic operations.
 
-We could also combine the two models (unlikely but look into it):
+\subsection{2. MathBERT Tokenizer and Encoder}
 
-Standard Transformers Architecture: https://arxiv.org/abs/1706.03762
+The parsed mathematical expression is fed into a \texttt{MathBERT} tokenizer and encoder, which is a specialized version of BERT fine-tuned for mathematical tasks \cite{mathbert}. MathBERT has been trained to handle both natural language and symbolic mathematical notation, which allows it to effectively process math-related queries and understand the underlying structure of the problem. The steps involved are as follows:
+
+\begin{itemize}
+    \item \textbf{Tokenization:} The \texttt{MathBERT} tokenizer splits the input into subword tokens that represent both natural language components and mathematical symbols. This step is crucial for handling mixed inputs such as text-based questions and mathematical formulas.
+    \item \textbf{Contextual Embedding:} The tokenized input is passed through the \texttt{MathBERT} encoder, which generates contextual embeddings for each token. These embeddings capture semantic relationships between mathematical operations, variables, and their corresponding natural language descriptions. The encoder's attention mechanism enables the model to focus on relevant parts of the input when generating solutions.
+\end{itemize}
+
+\subsection{3. SymPy Solver}
+
+Once the problem is tokenized and embedded by the MathBERT encoder, it is passed to the \texttt{SymPy} Solver for symbolic computation. \texttt{SymPy} is a Python library dedicated to symbolic mathematics, and its role in this architecture is twofold:
+
+\begin{itemize}
+    \item \textbf{Symbolic Manipulation:} \texttt{SymPy} is used to perform algebraic simplifications, differentiation, integration, solving equations, and other symbolic manipulations based on the parsed mathematical expression. This step leverages the full symbolic capabilities of \texttt{SymPy} to compute exact solutions when possible.
+    \item \textbf{Mathematical Inference:} For problems requiring a numerical solution (such as solving equations), \texttt{SymPy} can use numerical solvers to provide an approximate answer. \texttt{SymPy} supports a wide range of operations, ensuring that the model can handle complex algebraic, calculus, and number-theoretic problems.
+\end{itemize}
+
+This integration ensures that the model not only understands the mathematical structure of the problem but also can derive precise and reliable solutions when applicable.
+
+\subsection{4. Seq2Seq Decoder}
+
+The final step of the architecture involves the use of a Seq2Seq decoder, which generates the natural language output from the symbolic solution obtained from \texttt{SymPy}. The decoder is designed to convert symbolic results back into human-readable text, making the solution interpretable and usable for end-users.
+
+\begin{itemize}
+    \item \textbf{Input:} The output from \texttt{SymPy} (whether symbolic or numeric) is used as input to the decoder.
+    \item \textbf{Generation:} The Seq2Seq model is trained to map the symbolic solution into a sequence of natural language words or sentences. This component ensures that the model can output the solution in an understandable and grammatically correct format, whether it's in a step-by-step explanation or a direct final answer.
+\end{itemize}
+
+This step integrates both symbolic manipulation and natural language generation, ensuring that the solution is not only mathematically accurate but also linguistically appropriate.
+
+\subsection{5. Post-processing}
+
+After the Seq2Seq decoder generates the output, a final post-processing step may be applied to format the output into a more user-friendly form. This includes rendering mathematical symbols and expressions in LaTeX or plain text, ensuring that the generated solution is clear, easy to understand, and visually appealing.
+
+\subsection{6. Overall Workflow}
+
+The model operates as follows:
+
+\begin{enumerate}
+    \item \textbf{Input:} A mathematical problem is provided as a LaTeX or natural language string (e.g., "Solve for x: $x^2 + 5x + 6 = 0$").
+    \item \texttt{LaTeX2SymPy} parses the LaTeX expression into a symbolic representation.
+    \item \texttt{MathBERT} processes the tokenized input and encodes it into contextual embeddings.
+    \item \texttt{SymPy} handles the symbolic manipulation and computation to derive the solution.
+    \item \texttt{Seq2Seq Decoder} generates a natural language explanation or final answer based on the symbolic solution.
+    \item \texttt{Post-processing} ensures the final output is formatted and presented to the user.
+\end{enumerate}
+
+\subsection{7. Advantages of the Proposed Architecture}
+
+The hybrid architecture offers several advantages:
+
+\begin{itemize}
+    \item \textbf{Hybrid Approach:} The combination of symbolic computation (via \texttt{SymPy}) and deep learning (via \texttt{MathBERT} and Seq2Seq) leverages the strengths of both methods, enabling the model to handle complex mathematical reasoning and natural language understanding simultaneously.
+    \item \textbf{Lightweight and Efficient:} The model is designed to be efficient by using pre-trained BERT embeddings and leveraging \texttt{SymPy} for exact symbolic computation, reducing the need for large-scale numerical solvers or extensive training data.
+    \item \textbf{Open Source:} All components of the model (\texttt{SymPy}, \texttt{MathBERT}, Seq2Seq, and \texttt{LaTeX2SymPy}) are open-source, ensuring transparency, reproducibility, and accessibility.
+    \item \textbf{Scalability:} The model can handle a wide variety of mathematical problems, from basic algebra to more advanced calculus and number theory, making it suitable for a range of educational and professional applications.
+\end{itemize}
+
 
 \section{Model architecture figure}
 Takia
@@ -276,11 +354,11 @@ To mitigate the first risk, the model should be used as a learning tool rather t
 To mitigate the second risk, the model should be used in a controlled environment where students are guided on how to use the model appropriately. For example, teachers could provide guidelines on how to use the model to check answers or generate practice problems, rather than using it to directly provide solutions. Furthermore, it is crucial to emphasize the value of understanding the material and using tools as aids rather than shortcuts. This would prevent plagiarism and encourage students to engage with the material and develop their problem-solving skills.
 
 \section{Work division}
-
-A description of how the work will be divided between
-the team members, and how the team members will be
-working together (e.g. meet every week Tuesday 4-5
-pm).
+#TODO: change work division to be that of the actual project
+% A description of how the work will be divided between
+% the team members, and how the team members will be
+% working together (e.g. meet every week Tuesday 4-5
+% pm).
 
 Chloe - Background and Related Work, Abstract, Model Architecture
 
