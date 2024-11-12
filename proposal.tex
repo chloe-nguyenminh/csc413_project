@@ -7,7 +7,7 @@
 
 
 % ready for submission
-\usepackage{neurips_2023}
+\usepackage[final]{neurips_2023}
 
 
 % to compile a preprint version, e.g., for submission to arXiv, add add the
@@ -32,9 +32,11 @@
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
 \usepackage{xcolor}         % colors
+\usepackage{graphicx}       % images
+\usepackage{float}          % use the [H] option for figure placement
 
 
-\title{Formatting Instructions For NeurIPS 2023}
+\title{Project Proposal: Transformer-based Model for Mathematical Problem Solving}
 
 
 % The \author macro works with any number of authors. There are two commands
@@ -47,443 +49,346 @@
 
 
 \author{%
-  David S.~Hippocampus\thanks{Use footnote for providing further information
-    about author (webpage, alternative address)---\emph{not} for acknowledging
-    funding agencies.} \\
-  Department of Computer Science\\
-  Cranberry-Lemon University\\
-  Pittsburgh, PA 15213 \\
-  \texttt{hippo@cs.cranberry-lemon.edu} \\
-  % examples of more authors
-  % \And
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
-  % \AND
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
-  % \And
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
-  % \And
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
+    Chau Nguyen \\
+    \texttt{chauminh.nguyen@mail.utoronto.ca} \\
+    \and
+    Gabriel You \\
+    \texttt{gabriel.you@mail.utoronto.ca} \\
+    \and
+    Takia Talha \\
+    \texttt{takia.talha@mail.utoronto.ca} \\
+    \and
+    Taha Siddiqi \\
+    \texttt{taha.siddiqi@mail.utoronto.ca} \\
+    \\
+    Department of Mathematical \& Computational Sciences \\
+    University of Toronto Mississauga
 }
-
-
 \begin{document}
-
 
 \maketitle
 
 
 \begin{abstract}
-  The abstract paragraph should be indented \nicefrac{1}{2}~inch (3~picas) on
-  both the left- and right-hand margins. Use 10~point type, with a vertical
-  spacing (leading) of 11~points.  The word \textbf{Abstract} must be centered,
-  bold, and in point size 12. Two line spaces precede the abstract. The abstract
-  must be limited to one paragraph.
-\end{abstract}
+%   Chloe
 
+%   The abstract paragraph should be indented \nicefrac{1}{2}~inch (3~picas) on
+%   both the left- and right-hand margins. Use 10~point type, with a vertical
+%   spacing (leading) of 11~points.  The word \textbf{Abstract} must be centered,
+%   bold, and in point size 12. Two line spaces precede the abstract. The abstract
+%   must be limited to one paragraph.
 
-\section{Submission of papers to NeurIPS 2023}
+%   A short description of your goals, task, model, and (for
+% the final report) results. The abstract should make the
+% motivations and the scope of your project clear so that
+% readers can decide whether they are interested in
+% reading your work.
+  Mathematical problem solving often requires both symbolic manipulation and natural language understanding. In this paper, we propose a hybrid, lightweight, and open-source model that combines symbolic mathematics with deep learning to solve mathematical problems expressed in natural language or LaTeX format. Our approach integrates several powerful components: \texttt{LaTeX2SymPy} for parsing mathematical expressions from LaTeX, \texttt{MathBERT} for tokenizing and encoding both natural language and symbolic math content, \texttt{SymPy} for symbolic computation and exact mathematical solving, and a Seq2Seq decoder for generating natural language output from symbolic results. This architecture allows the model to handle complex mathematical reasoning tasks, from simple algebraic equations to advanced calculus, while providing accurate and interpretable solutions. The model is efficient, scalable, and entirely open-source, enabling easy integration into educational tools, computational software, and research applications. We demonstrate that our hybrid model leverages the strengths of both symbolic and neural approaches to deliver a more robust solution for automated math problem-solving.
+  \end{abstract}
+\section{Introduction}
+% Gabriel
 
+% A description of the motivation behind your work, why
+% the task you chose is interesting/important, and a
+% summary of your (proposed) approach. The problem
+% that you want to solve should be clearly stated in the
+% introduction: especially the input and output of your
+% model and the format of the input and output. This
+% section should also make it clear why your deep
+% learning approach is reasonable for this problem.
+A challenge often faced by students in the computational sciences 
+is learning how to solve logically intensive math questions. 
+Often times the transition from computation focused math to reasoning 
+focused math presents a large learning curve due to the difficulty of 
+developing mathematical intuition and a lack of rigorous step by step 
+answers to compare with. We hope to develop an accessible model that can 
+take in a latex text input of a math problem and output a descriptive and accurate latex text answer output to the problem. 
+Developing models capable of solving this task is an infamously difficult problem \cite{Ünsal_Gehr_Vechev_2024} due to the requirement of consistency and mathematical riqour within the answers outputted by the models. 
+\\
+Currently the best models in this area use transformer LLM archetictures with large pretraining datasets. 
+The downsides of these models is that the consistency may be poor due to multiple ways to present the same problem which are treated differently by the model.
+To solve for this we are incorporating a symbolic model into a transformer LLM architecture to hopefully increase accuracy within our math solving model.
+ We believe this deep learning approach is reasonable as understanding the language of math problems is something suited for transformer LLM models and creating consistency in mathematical reasoning is something that symbolic models are good at. By combining these 2 approaches we hope that it will combine the best of both architectures.  With this work we hope to develop a more robust and helpful model that is able to answer with reason and provide thorough feedback on math questions potential users might have.
 
-Please read the instructions below carefully and follow them faithfully. \textbf{Important:} This year the checklist will be submitted separately from the main paper in OpenReview, please review it well ahead of the submission deadline: \url{https://neurips.cc/public/guides/PaperChecklist}.
+ \section{Background and Related Work}
+% Chloe
 
+% A summary of the background material that students of
+% CSC413 would not already be familiar with. A
+% description of related work done in the area, and how
+% your approach compares with theirs.
 
-\subsection{Style}
+% If your project builds on previous work, clearly
+% distinguish what they did from what your new
+% contribution is. Also, include a 1-2 sentence summary
+% of other closely related papers. We realize you might
+% not know about all related papers (or have time to
+% carefully read all related papers), and that's OK for this
+% project. Using bibtex is annoying at first, but Google
+% Scholar can give you the bibtex entries.
 
+The application of large language models (LLMs) such as BERT \cite{mathBERT} and GPT \cite{Brown_et_al._2020} has revolutionized the field of natural language processing (NLP). These transformer-based models excel at a wide range of tasks, including text classification, question answering, and translation. However, when it comes to mathematical reasoning and algebraic problem solving, LLMs often face challenges due to their primary design focusing on natural language rather than symbolic or mathematical computation.
 
-Papers to be submitted to NeurIPS 2023 must be prepared according to the
-instructions presented here. Papers may only be up to {\bf nine} pages long,
-including figures. Additional pages \emph{containing only acknowledgments and
-references} are allowed. Papers that exceed the page limit will not be
-reviewed, or in any other way considered for presentation at the conference.
+To address this, there has been increasing interest in integrating symbolic reasoning capabilities into neural architectures. Symbolic models are traditionally used for tasks that require formal manipulation of symbols, such as equation solving, logical inference, and symbolic differentiation. Recent efforts have focused on combining the power of neural networks with symbolic reasoning systems to enhance the models' performance on tasks that involve mathematics or formal logic.
 
+\subsection{The Role of Symbolic Models in Mathematical Reasoning}
 
-The margins in 2023 are the same as those in previous years.
+Symbolic models have long been a central tool in areas such as algebra, calculus, and theorem proving. These models represent mathematical objects (e.g., variables, equations, operators) explicitly and can apply algebraic rules, differentiation, integration, and other symbolic operations directly to manipulate these objects. However, traditional symbolic approaches face scalability issues when dealing with large, unstructured datasets, such as those encountered in real-world mathematical problem solving. 
 
+On the other hand, neural networks, particularly deep learning models, excel at processing unstructured data like natural language and images. Yet, they often struggle with the step-by-step logical reasoning required for tasks like algebraic equation solving or symbolic manipulation due to their inability to explicitly model mathematical operations. This limitation has motivated research into hybrid approaches that combine the benefits of both symbolic models and neural architectures.
 
-Authors are required to use the NeurIPS \LaTeX{} style files obtainable at the
-NeurIPS website as indicated below. Please make sure you use the current files
-and not previous versions. Tweaking the style files may be grounds for
-rejection.
+\subsection{Integration of Symbolic Models into Transformer-based Architecture}
 
+Recent work has explored the integration of symbolic reasoning within Large Language Models, particularly in the context of mathematical problem solving. A key idea is to augment traditional neural models with external symbolic components that can handle explicit algebraic operations. For example, incorporating \textit{symbolic equation solvers} into a Generative Pretrained Transformer (GPT) allows neural networks to handle more complex algebraic problems \cite{Hu2022Enhancing}. However, GPTs and other Large Language Models are large and not open-source, which makes it challenging for nonprofit educational organizations to conduct research and deploy it effectively due to limited access, high computational costs, and restrictions on customization.
 
-\subsection{Retrieval of style files}
+On the other hand, Bidirectional Encoder Representations from Transformers (BERT), originally designed for NLP tasks, has been shown to benefit from fine-tuning on an extensive and diverse mathematical corpuses. Devlin et al. (2024) proposed the finetuning of BERT on mathematical datasets to better understand and solve algebraic problems \cite{DevlinBERT}. Given that BERT and its variants, including mathBERT, are open source, lightweight and accessible to the general public, research and development in extending its current performance would be more easily motivated and conducted. However, to handle more complex mathematical reasoning tasks that involve symbolic manipulation, BERT-based models can be augmented with symbolic reasoning modules that perform operations like solving equations, simplifying expressions, and computing symbolic derivatives. This approach attempts to overcome the limitations of pure neural models by integrating symbolic computations into the reasoning process of the model. 
 
+Recent advances have focused on combining symbolic models with large language models to improve their ability to solve algebraic problems. In the context of BERT and similar models, symbolic models can be incorporated into the encoder-decoder structure, either by pre-processing mathematical inputs with symbolic solvers or by augmenting the model's latent space with symbolic representations that guide its reasoning. For example, the work by Ünsal et al. \cite{Ünsal_Gehr_Vechev_2024} introduces a method where symbolic expressions produced by symbolic models are integrated directly into the attention mechanism of transformer-based models, allowing the network to learn from an accurate chain of subexpressions as part of the mathematical solving procedure as if they were a a paragraph composed of sentences.
 
-The style files for NeurIPS and other conference information are available on
-the website at
-\begin{center}
-  \url{http://www.neurips.cc/}
-\end{center}
-The file \verb+neurips_2023.pdf+ contains these instructions and illustrates the
-various formatting requirements your NeurIPS paper must satisfy.
+\subsection{Contributions of the Current Work}
 
+In this work, we propose a novel approach to algebraic problem solving by incorporating a symbolic model into the BERT encoder. We aim to enhance the BERT architecture with an external symbolic solver that can manipulate algebraic expressions, perform equation solving, and reason about mathematical objects symbolically. By integrating these symbolic capabilities directly into the BERT encoder, we hypothesize that the model will achieve improved performance on algebraic problem-solving tasks, enabling it to generate both correct and interpretable solutions to complex algebraic problems. Our work builds on recent advances in symbolic-augmented language models and aims to push the boundaries of what is achievable in algebraic reasoning within LLMs.
 
-The only supported style file for NeurIPS 2023 is \verb+neurips_2023.sty+,
-rewritten for \LaTeXe{}.  \textbf{Previous style files for \LaTeX{} 2.09,
-  Microsoft Word, and RTF are no longer supported!}
 
+\section{Data}
+% Taha 
 
-The \LaTeX{} style file contains three optional arguments: \verb+final+, which
-creates a camera-ready copy, \verb+preprint+, which creates a preprint for
-submission to, e.g., arXiv, and \verb+nonatbib+, which will not load the
-\verb+natbib+ package for you in case of package clash.
+% The dataset used in your model. Include any key
+% exploratory figures that will help readers evaluate the
+% difficulty of your problem and interpret the performance
+% of your model.
 
+\subsection{Datasets}
 
-\paragraph{Preprint option}
-If you wish to post a preprint of your work online, e.g., on arXiv, using the
-NeurIPS style, please use the \verb+preprint+ option. This will create a
-nonanonymized version of your work with the text ``Preprint. Work in progress.''
-in the footer. This version may be distributed as you see fit, as long as you do not say which conference it was submitted to. Please \textbf{do
-  not} use the \verb+final+ option, which should \textbf{only} be used for
-papers accepted to NeurIPS. 
+For this project, we decided to use the following datasets:
 
+\href{https://www.kaggle.com/datasets/mathurinache/math-dataset}{{\bf Math Dataset}}
 
-At submission time, please omit the \verb+final+ and \verb+preprint+
-options. This will anonymize your submission and add line numbers to aid
-review. Please do \emph{not} refer to these line numbers in your paper as they
-will be removed during generation of camera-ready copies.
+The MATH dataset consists of 12,500 (7,500 training and 5,000 test) problems from mathematics competitions including the AMC 10, AMC 12, AIME, and more. Many of these problems can be collected from \href{https://artofproblemsolving.com/community/c3158\_usa\_contests}{aops.com/community/c3158\_usa\_contests}.
+\cite{hendrycksmath2021}
 
+\href{https://huggingface.co/datasets/AI-MO/NuminaMath-CoT}{{\bf NuminaMath-CoT}}
 
-The file \verb+neurips_2023.tex+ may be used as a ``shell'' for writing your
-paper. All you have to do is replace the author, title, abstract, and text of
-the paper with your own.
+The Numina Math CoT dataset has approximately 860k math problems, where each solution is formatted in a Chain of Thought (CoT) manner. The sources of the dataset range from Chinese high school math exercises to US and international mathematics olympiad competition problems.
+\cite{numina_math_datasets_CoT}
 
+\href{https://huggingface.co/datasets/AI-MO/NuminaMath-TIR}{{\bf NuminaMath-TIR}}
 
-The formatting instructions contained in these style files are summarized in
-Sections \ref{gen_inst}, \ref{headings}, and \ref{others} below.
+The Numina Math TIR dataset is a more specific version of the CoT dataset, where 70k problems are selected, with a focus on numerical outputs and integers. Tool-integrated reasoning (TIR) plays a crucial role in this dataset, where the solution to each problem is a sequence of steps that can be executed by a computer program.
+\cite{numina_math_datasets_TIR}
 
+\subsection{Data Formatting}
 
-\section{General formatting instructions}
-\label{gen_inst}
+Problems and solutions are formatted using LATEX. The usage of LATEX ensures that the data is easily readable and is easy to parse and process for training the model.
 
+The data for the Math Dataset is formatted as a JSON file, with each problem containing the following fields:
+\begin{itemize}
+  \item problem: The text of the problem
+  \item level: The difficulty level of the problem (Level 1 up to Level 5)
+  \item type: The type of math problem (e.g. algebra, geometry, etc.)
+  \item solution: The solution to the problem
+\end{itemize}
 
-The text must be confined within a rectangle 5.5~inches (33~picas) wide and
-9~inches (54~picas) long. The left margin is 1.5~inch (9~picas).  Use 10~point
-type with a vertical spacing (leading) of 11~points.  Times New Roman is the
-preferred typeface throughout, and will be selected for you by default.
-Paragraphs are separated by \nicefrac{1}{2}~line space (5.5 points), with no
-indentation.
+The data for the Numina Math CoT and TIR datasets are formatted as a JSON file, with each problem containing the following fields:
+\begin{itemize}
+  \item An array of objects, where the first object contains
+      \begin{itemize}
+        \item content: The text of the problem
+        \item role: the role assigned to the person who can access this data (user)
+      \end{itemize}
+  \item The second object contains
+      \begin{itemize}
+        \item content: The solution to the problem
+        \item role: the role assigned to the person who can access this data (assistant)
+      \end{itemize}
+\end{itemize}
 
+We intend to use these datasets to train our model to solve mathematical problems. We will preprocess the data into one format, to ensure that can be used by our model. We will also split the test data into validation and test sets to evaluate the performance of our model.
 
-The paper title should be 17~point, initial caps/lower case, bold, centered
-between two horizontal rules. The top rule should be 4~points thick and the
-bottom rule should be 1~point thick. Allow \nicefrac{1}{4}~inch space above and
-below the title to rules. All pages should start at 1~inch (6~picas) from the
-top of the page.
+\section{Model Architecture}
 
+The proposed model aims to combine the strengths of symbolic math-solving with neural language understanding by utilizing a hybrid architecture that integrates \texttt{LaTeX2SymPy} for parsing mathematical expressions, the \texttt{mathBERT} tokenizer and encoder for understanding the natural language problem, \texttt{SymPy} for symbolic manipulation and computation, and a Seq2Seq decoder for generating textual output. The architecture is designed to be lightweight, efficient, and open-source, making it accessible for deployment in a wide range of applications.
 
-For the final version, authors' names are set in boldface, and each name is
-centered above the corresponding address. The lead author's name is to be listed
-first (left-most), and the co-authors' names (if different address) are set to
-follow. If there is only one co-author, list both author and co-author side by
-side.
+\subsection{Input Layer: LaTeX2SymPy Parsing}
 
-
-Please pay special attention to the instructions in Section \ref{others}
-regarding figures, tables, acknowledgments, and references.
-
-
-\section{Headings: first level}
-\label{headings}
-
-
-All headings should be lower case (except for first word and proper nouns),
-flush left, and bold.
-
-
-First-level headings should be in 12-point type.
-
-
-\subsection{Headings: second level}
-
-
-Second-level headings should be in 10-point type.
-
-
-\subsubsection{Headings: third level}
-
-
-Third-level headings should be in 10-point type.
-
-
-\paragraph{Paragraphs}
-
-
-There is also a \verb+\paragraph+ command available, which sets the heading in
-bold, flush left, and inline with the text, with the heading followed by 1\,em
-of space.
-
-
-\section{Citations, figures, tables, references}
-\label{others}
-
-
-These instructions apply to everyone.
-
-
-\subsection{Citations within the text}
-
-
-The \verb+natbib+ package will be loaded for you by default.  Citations may be
-author/year or numeric, as long as you maintain internal consistency.  As to the
-format of the references themselves, any style is acceptable as long as it is
-used consistently.
-
-
-The documentation for \verb+natbib+ may be found at
-\begin{center}
-  \url{http://mirrors.ctan.org/macros/latex/contrib/natbib/natnotes.pdf}
-\end{center}
-Of note is the command \verb+\citet+, which produces citations appropriate for
-use in inline text.  For example,
-\begin{verbatim}
-   \citet{hasselmo} investigated\dots
-\end{verbatim}
-produces
-\begin{quote}
-  Hasselmo, et al.\ (1995) investigated\dots
-\end{quote}
-
-
-If you wish to load the \verb+natbib+ package with options, you may add the
-following before loading the \verb+neurips_2023+ package:
-\begin{verbatim}
-   \PassOptionsToPackage{options}{natbib}
-\end{verbatim}
-
-
-If \verb+natbib+ clashes with another package you load, you can add the optional
-argument \verb+nonatbib+ when loading the style file:
-\begin{verbatim}
-   \usepackage[nonatbib]{neurips_2023}
-\end{verbatim}
-
-
-As submission is double blind, refer to your own published work in the third
-person. That is, use ``In the previous work of Jones et al.\ [4],'' not ``In our
-previous work [4].'' If you cite your other papers that are not widely available
-(e.g., a journal paper under review), use anonymous author names in the
-citation, e.g., an author of the form ``A.\ Anonymous'' and include a copy of the anonymized paper in the supplementary material.
-
-
-\subsection{Footnotes}
-
-
-Footnotes should be used sparingly.  If you do require a footnote, indicate
-footnotes with a number\footnote{Sample of the first footnote.} in the
-text. Place the footnotes at the bottom of the page on which they appear.
-Precede the footnote with a horizontal rule of 2~inches (12~picas).
-
-
-Note that footnotes are properly typeset \emph{after} punctuation
-marks.\footnote{As in this example.}
-
-
-\subsection{Figures}
-
-
-\begin{figure}
-  \centering
-  \fbox{\rule[-.5cm]{0cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
-  \caption{Sample figure caption.}
-\end{figure}
-
-
-All artwork must be neat, clean, and legible. Lines should be dark enough for
-purposes of reproduction. The figure number and caption always appear after the
-figure. Place one line space before the figure caption and one line space after
-the figure. The figure caption should be lower case (except for first word and
-proper nouns); figures are numbered consecutively.
-
-
-You may use color figures.  However, it is best for the figure captions and the
-paper body to be legible if the paper is printed in either black/white or in
-color.
-
-
-\subsection{Tables}
-
-
-All tables must be centered, neat, clean and legible.  The table number and
-title always appear before the table.  See Table~\ref{sample-table}.
-
-
-Place one line space before the table title, one line space after the
-table title, and one line space after the table. The table title must
-be lower case (except for first word and proper nouns); tables are
-numbered consecutively.
-
-
-Note that publication-quality tables \emph{do not contain vertical rules.} We
-strongly suggest the use of the \verb+booktabs+ package, which allows for
-typesetting high-quality, professional tables:
-\begin{center}
-  \url{https://www.ctan.org/pkg/booktabs}
-\end{center}
-This package was used to typeset Table~\ref{sample-table}.
-
-
-\begin{table}
-  \caption{Sample table title}
-  \label{sample-table}
-  \centering
-  \begin{tabular}{lll}
-    \toprule
-    \multicolumn{2}{c}{Part}                   \\
-    \cmidrule(r){1-2}
-    Name     & Description     & Size ($\mu$m) \\
-    \midrule
-    Dendrite & Input terminal  & $\sim$100     \\
-    Axon     & Output terminal & $\sim$10      \\
-    Soma     & Cell body       & up to $10^6$  \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\subsection{Math}
-Note that display math in bare TeX commands will not create correct line numbers for submission. Please use LaTeX (or AMSTeX) commands for unnumbered display math. (You really shouldn't be using \$\$ anyway; see \url{https://tex.stackexchange.com/questions/503/why-is-preferable-to} and \url{https://tex.stackexchange.com/questions/40492/what-are-the-differences-between-align-equation-and-displaymath} for more information.)
-
-\subsection{Final instructions}
-
-Do not change any aspects of the formatting parameters in the style files.  In
-particular, do not modify the width or length of the rectangle the text should
-fit into, and do not change font sizes (except perhaps in the
-\textbf{References} section; see below). Please note that pages should be
-numbered.
-
-
-\section{Preparing PDF files}
-
-
-Please prepare submission files with paper size ``US Letter,'' and not, for
-example, ``A4.''
-
-
-Fonts were the main cause of problems in the past years. Your PDF file must only
-contain Type 1 or Embedded TrueType fonts. Here are a few instructions to
-achieve this.
-
+The input to the model is a natural language mathematical problem, often expressed in LaTeX format. To handle the structured mathematical expressions present in LaTeX format, we use \texttt{LaTeX2SymPy}. This component parses the LaTeX input into a symbolic expression that can be processed by the subsequent layers.
 
 \begin{itemize}
+    \item \textbf{LaTeX Parsing:} Convert LaTeX-based input strings into tokenized symbolic expressions.
+    \item \textbf{Symbolic Representation:} Map the parsed LaTeX expressions into \texttt{SymPy} objects, which represent mathematical terms, operators, and functions in a format suitable for algebraic manipulation.
+\end{itemize}
 
+This parsing step ensures that the mathematical problem is represented in a structured and mathematically accurate form, making it ready for further symbolic operations.
 
-\item You should directly generate PDF files using \verb+pdflatex+.
+\subsection{SymPy Solver}
 
+Once the problem is tokenized and embedded by the MathBERT encoder, it is passed to the \texttt{SymPy} Solver for symbolic computation. \texttt{SymPy} is a Python library dedicated to symbolic mathematics, and its role in this architecture is twofold:
 
-\item You can check which fonts a PDF files uses.  In Acrobat Reader, select the
-  menu Files$>$Document Properties$>$Fonts and select Show All Fonts. You can
-  also use the program \verb+pdffonts+ which comes with \verb+xpdf+ and is
-  available out-of-the-box on most Linux machines.
+\begin{itemize}
+    \item \textbf{Symbolic Manipulation:} \texttt{SymPy} is used to perform algebraic simplifications, differentiation, integration, solving equations, and other symbolic manipulations based on the parsed mathematical expression. This step leverages the full symbolic capabilities of \texttt{SymPy} to compute exact solutions when possible.
+    \item \textbf{Mathematical Inference:} For problems requiring a numerical solution (such as solving equations), \texttt{SymPy} can use numerical solvers to provide an approximate answer. \texttt{SymPy} supports a wide range of operations, ensuring that the model can handle complex algebraic, calculus, and number-theoretic problems.
+    \item \textbf{Generation of Subexpressions} The SymPy solver processes a given function one step at a time. To simulate the process of arriving at a mathematical solution, we feed the given expression into SymPy, then repeatedly feed the output expression into the SymPy until a solution is arrived. The generated subexpressions are sequentially concatenated in the order that they are produced, and the final string is passed into the tokenizer. The goal is for the model to not only learn the positional embeddings and the underlying relations behind the word and mathematical expression parts of a given problem, but also to learn the explicit steps leading up to the solution. 
+\end{itemize}
 
+This integration ensures that the model not only understands the mathematical structure of the problem but also can derive precise and reliable solutions when applicable.
 
-\item \verb+xfig+ "patterned" shapes are implemented with bitmap fonts.  Use
-  "solid" shapes instead.
+\subsection{MathBERT Tokenizer and Encoder}
 
+The parsed mathematical expression is fed into a \texttt{MathBERT} tokenizer and encoder, which is a specialized version of BERT fine-tuned for mathematical tasks \cite{mathbert}. MathBERT has been trained to handle both natural language and symbolic mathematical notation, which allows it to effectively process math-related queries and understand the underlying structure of the problem. The steps involved are as follows:
 
-\item The \verb+\bbold+ package almost always uses bitmap fonts.  You should use
-  the equivalent AMS Fonts:
-\begin{verbatim}
-   \usepackage{amsfonts}
-\end{verbatim}
-followed by, e.g., \verb+\mathbb{R}+, \verb+\mathbb{N}+, or \verb+\mathbb{C}+
-for $\mathbb{R}$, $\mathbb{N}$ or $\mathbb{C}$.  You can also use the following
-workaround for reals, natural and complex:
-\begin{verbatim}
-   \newcommand{\RR}{I\!\!R} %real numbers
-   \newcommand{\Nat}{I\!\!N} %natural numbers
-   \newcommand{\CC}{I\!\!\!\!C} %complex numbers
-\end{verbatim}
-Note that \verb+amsfonts+ is automatically loaded by the \verb+amssymb+ package.
+\begin{itemize}
+    \item \textbf{Tokenization:} The \texttt{MathBERT} tokenizer splits the input into subword tokens that represent both natural language components and mathematical symbols. This step is crucial for handling mixed inputs such as text-based questions and mathematical formulas.
+    \item \textbf{Contextual Embedding:} The tokenized input is passed through the \texttt{MathBERT} encoder, which generates contextual embeddings for each token. These embeddings capture semantic relationships between mathematical operations, variables, and their corresponding natural language descriptions. The encoder's attention mechanism enables the model to focus on relevant parts of the input when generating solutions.
+\end{itemize}
 
+\subsection{Seq2Seq Decoder}
 
+The final step of the architecture involves the use of a Seq2Seq decoder, which generates the natural language output from the symbolic solution obtained from \texttt{SymPy}. The decoder is designed to convert symbolic results back into human-readable text, making the solution interpretable and usable for end-users.
+
+\begin{itemize}
+    \item \textbf{Input:} The output from \texttt{SymPy} (whether symbolic or numeric) is used as input to the decoder.
+    \item \textbf{Generation:} The Seq2Seq model is trained to map the symbolic solution into a sequence of natural language words or sentences. This component ensures that the model can output the solution in an understandable and grammatically correct format.
+\end{itemize}
+
+This step integrates both symbolic manipulation and natural language generation, ensuring that the solution is not only mathematically accurate but also linguistically appropriate.
+
+\subsection{Advantages of the Proposed Architecture}
+
+The hybrid architecture offers several advantages:
+
+\begin{itemize}
+    \item \textbf{Hybrid Approach:} The combination of symbolic computation (via \texttt{SymPy}) and deep learning (via \texttt{MathBERT} and Seq2Seq) leverages the strengths of both methods, enabling the model to handle complex mathematical reasoning and natural language understanding simultaneously.
+    \item \textbf{Lightweight and Efficient:} The model is designed to be efficient by using pre-trained BERT embeddings and leveraging \texttt{SymPy} for exact symbolic computation, reducing the need for large-scale numerical solvers or extensive training data.
+    \item \textbf{Open Source:} All components of the model (\texttt{SymPy}, \texttt{MathBERT}, Seq2Seq, and \texttt{LaTeX2SymPy}) are open-source, ensuring transparency, reproducibility, and accessibility.
+    \item \textbf{Scalability:} The model can handle a wide variety of mathematical problems, from basic algebra to more advanced calculus and number theory, making it suitable for a range of educational and professional applications.
 \end{itemize}
 
 
-If your file contains type 3 fonts or non embedded TrueType fonts, we will ask
-you to fix it.
+\section{Model architecture figure}
+% Takia
+
+% A figure that helps show the overall model or idea. The
+% idea is to make your paper more accessible, especially
+% to readers who are starting by skimming your paper.
+% You must create a new figure, not just use someone
+% else's, even with attribution. Be careful that all figure
+% text are legible, and are approximately the same size
+% as the main text.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.2]{./figures/Model_architecture_figure.png}
+  \caption{The Transformer - model architecture.}
+  \label{fig:model-arch}
+\end{figure}
 
 
-\subsection{Margins in \LaTeX{}}
+% LEAVE FOR FINAL REPORT
+% \section{Results}
+% Describe the performance of your model, either
+% quantitatively or (for generative models) qualitatively. To
+% help interpret the model, compare your model with a
+% baseline model. Qualitative evaluation is OK.
 
 
-Most of the margin problems come from figures positioned by hand using
-\verb+\special+ or other commands. We suggest using the command
-\verb+\includegraphics+ from the \verb+graphicx+ package. Always specify the
-figure width as a multiple of the line width as in the example below:
-\begin{verbatim}
-   \usepackage[pdftex]{graphicx} ...
-   \includegraphics[width=0.8\linewidth]{myfile.pdf}
-\end{verbatim}
-See Section 4.4 in the graphics bundle documentation
-(\url{http://mirrors.ctan.org/macros/latex/required/graphics/grfguide.pdf})
+% LEAVE FOR FINAL REPORT
+% \section{Discussion}
+% Interpret the results of your model. If appropriate,
+% compare the model performance with the baseline.
+% Discuss other features that you notice about the model.
 
 
-A number of width problems arise when \LaTeX{} cannot properly hyphenate a
-line. Please give LaTeX hyphenation hints using the \verb+\-+ command when
-necessary.
+% LEAVE FOR FINAL REPORT
+% \section{Limitations}
+% Describe some settings in which we’d expect your
+% approach to perform poorly, or where all existing
+% models fail. Try to guess or explain why these
+% limitations are the way they are. Give some examples
+% of possible extensions, ways to address these
+% limitations or open problems
+
+\section{Ethical considerations}
+% Taha
+
+% Potential ethical issues posed by the use or misuse of
+% your model. Your report should transparently
+% communicate the known or anticipated consequences
+% of building and using machine learning models on this
+% task.
+
+% https://neurips.cc/public/EthicsGuidelines
+
+\subsection{Ethical Issues}
+One ethical consideration is the potential for the model to be used to cheat on math assignments/homework. This could encourage students to use the model as a shortcut rather than engaging with the material themselves, which would negatively impact a students capacity for critical thinking and problem-solving. 
+
+Another ethical issue is intellectual property rights, as the model is trained on copyrighted data. The model could inadvertently promote plagiarism if it directly provides solutions that students submit as their own, without understanding the learning process. This could lead to academic dishonesty and undermine the integrity of the educational system.
+
+\subsection{Mitigation Strategies}
+To mitigate the first risk, the model should be used as a learning tool rather than a tool for cheating. For example, the model could be used to generate practice problems for students to solve, or to provide explanations for the solutions to problems. This would help students learn and improve their math skills, rather than using the model to cheat. Therefore, while automation can support learning, it is essential that it complements, rather than replaces, active engagement with the educational process.
+
+To mitigate the second risk, the model should be used in a controlled environment where students are guided on how to use the model appropriately. For example, teachers could provide guidelines on how to use the model to check answers or generate practice problems, rather than using it to directly provide solutions. Furthermore, it is crucial to emphasize the value of understanding the material and using tools as aids rather than shortcuts. This would prevent plagiarism and encourage students to engage with the material and develop their problem-solving skills.
+
+\section{Work division}
+% #TODO: change work division to be that of the actual project
+% A description of how the work will be divided between
+% the team members, and how the team members will be
+% working together (e.g. meet every week Tuesday 4-5
+% pm).
+
+\section*{Writing Components}
+The work will be split as follows:
+\begin{itemize}
+  \item \textbf{Chloe} - Background and Related Work, Abstract, Model Architecture, Results
+  \item \textbf{Takia} - Model Architecture Figure, Model Architecture, Discussions
+  \item \textbf{Gabriel} - Introduction, Model Architecture, Conclusion
+  \item \textbf{Taha} - Data, Ethical Considerations, Model Architecture, Limitatations
+\end{itemize}
+
+The team will work on each part and meet every weekend for additional discussions.
+
+\section*{Technical Section}
+
+\subsection*{Data-Related Tasks (Taha)}
+\begin{itemize}
+  \item Collecting and cleaning large datasets.
+  \item Tokenizing text data.
+  \item Creating and managing training, validation, and test datasets.
+\end{itemize}
+
+\subsection*{Model Architecture and Development Tasks (Chloe)}
+\begin{itemize}
+  \item Designing the encoder and decoder architecture.
+  \item Implementing the transformer model (attention mechanisms, multi-head attention, etc.).
+  \item Ensuring model components (BERT, etc.) work seamlessly together.
+\end{itemize}
+
+\subsection*{Training and Optimization (Gabriel)}
+\textbf{Responsibilities:}
+\begin{itemize}
+  \item Setting up the training pipeline.
+  \item Hyperparameter tuning (learning rate, batch size, etc.).
+  \item Implementing and testing various optimization techniques (Adam, gradient clipping, learning rate schedules).
+\end{itemize}
+
+\subsection*{Evaluation and Visualizations (Takia)}
+\textbf{Responsibilities:}
+\begin{itemize}
+  \item Evaluating model performance using appropriate metrics (BLEU score, perplexity).
+  \item Developing visualization tools to monitor training and validation performance.
+  \item Deciding what metrics to measure the model on.
+\end{itemize}
 
 
-\begin{ack}
-Use unnumbered first level headings for the acknowledgments. All acknowledgments
-go at the end of the paper before the list of references. Moreover, you are required to declare
-funding (financial activities supporting the submitted work) and competing interests (related financial activities outside the submitted work).
-More information about this disclosure can be found at: \url{https://neurips.cc/Conferences/2023/PaperInformation/FundingDisclosure}.
 
+% LEAVE FOR FINAL REPORT
+% \section{Conclusion}
 
-Do {\bf not} include this section in the anonymized submission, only in the final paper. You can use the \texttt{ack} environment provided in the style file to autmoatically hide this section in the anonymized submission.
-\end{ack}
+% A description of how the work will be divided between
+% the team members, and how the team members will be
+% working together (e.g. meet every week Tuesday 4-5
+% pm).
 
-
-
-\section{Supplementary Material}
-
-Authors may wish to optionally include extra information (complete proofs, additional experiments and plots) in the appendix. All such materials should be part of the supplemental material (submitted separately) and should NOT be included in the main submission.
-
-
-\section*{References}
-
-
-References follow the acknowledgments in the camera-ready paper. Use unnumbered first-level heading for
-the references. Any choice of citation style is acceptable as long as you are
-consistent. It is permissible to reduce the font size to \verb+small+ (9 point)
-when listing the references.
-Note that the Reference section does not count towards the page limit.
-\medskip
-
-
-{
-\small
-
-
-[1] Alexander, J.A.\ \& Mozer, M.C.\ (1995) Template-based algorithms for
-connectionist rule extraction. In G.\ Tesauro, D.S.\ Touretzky and T.K.\ Leen
-(eds.), {\it Advances in Neural Information Processing Systems 7},
-pp.\ 609--616. Cambridge, MA: MIT Press.
-
-
-[2] Bower, J.M.\ \& Beeman, D.\ (1995) {\it The Book of GENESIS: Exploring
-  Realistic Neural Models with the GEneral NEural SImulation System.}  New York:
-TELOS/Springer--Verlag.
-
-
-[3] Hasselmo, M.E., Schnell, E.\ \& Barkai, E.\ (1995) Dynamics of learning and
-recall at excitatory recurrent synapses and cholinergic modulation in rat
-hippocampal region CA3. {\it Journal of Neuroscience} {\bf 15}(7):5249-5262.
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\bibliographystyle{unsrt}
+\bibliography{references}
 
 \end{document}
