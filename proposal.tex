@@ -219,7 +219,19 @@ The input to the model is a natural language mathematical problem, often express
 
 This parsing step ensures that the mathematical problem is represented in a structured and mathematically accurate form, making it ready for further symbolic operations.
 
-\subsection{2. MathBERT Tokenizer and Encoder}
+\subsection{2. SymPy Solver}
+
+Once the problem is tokenized and embedded by the MathBERT encoder, it is passed to the \texttt{SymPy} Solver for symbolic computation. \texttt{SymPy} is a Python library dedicated to symbolic mathematics, and its role in this architecture is twofold:
+
+\begin{itemize}
+    \item \textbf{Symbolic Manipulation:} \texttt{SymPy} is used to perform algebraic simplifications, differentiation, integration, solving equations, and other symbolic manipulations based on the parsed mathematical expression. This step leverages the full symbolic capabilities of \texttt{SymPy} to compute exact solutions when possible.
+    \item \textbf{Mathematical Inference:} For problems requiring a numerical solution (such as solving equations), \texttt{SymPy} can use numerical solvers to provide an approximate answer. \texttt{SymPy} supports a wide range of operations, ensuring that the model can handle complex algebraic, calculus, and number-theoretic problems.
+    \item \textbf{Generation of Subexpressions} The SymPy solver processes a given function one step at a time. To simulate the process of arriving at a mathematical solution, we feed the given expression into SymPy, then repeatedly feed the output expression into the SymPy until a solution is arrived. The generated subexpressions are sequentially concatenated in the order that they are produced, and the final string is passed into the tokenizer. The goal is for the model to not only learn the positional embeddings and the underlying relations behind the word and mathematical expression parts of a given problem, but also to learn the explicit steps leading up to the solution. 
+\end{itemize}
+
+This integration ensures that the model not only understands the mathematical structure of the problem but also can derive precise and reliable solutions when applicable.
+
+\subsection{3. MathBERT Tokenizer and Encoder}
 
 The parsed mathematical expression is fed into a \texttt{MathBERT} tokenizer and encoder, which is a specialized version of BERT fine-tuned for mathematical tasks \cite{mathbert}. MathBERT has been trained to handle both natural language and symbolic mathematical notation, which allows it to effectively process math-related queries and understand the underlying structure of the problem. The steps involved are as follows:
 
@@ -228,44 +240,16 @@ The parsed mathematical expression is fed into a \texttt{MathBERT} tokenizer and
     \item \textbf{Contextual Embedding:} The tokenized input is passed through the \texttt{MathBERT} encoder, which generates contextual embeddings for each token. These embeddings capture semantic relationships between mathematical operations, variables, and their corresponding natural language descriptions. The encoder's attention mechanism enables the model to focus on relevant parts of the input when generating solutions.
 \end{itemize}
 
-\subsection{3. SymPy Solver}
-
-Once the problem is tokenized and embedded by the MathBERT encoder, it is passed to the \texttt{SymPy} Solver for symbolic computation. \texttt{SymPy} is a Python library dedicated to symbolic mathematics, and its role in this architecture is twofold:
-
-\begin{itemize}
-    \item \textbf{Symbolic Manipulation:} \texttt{SymPy} is used to perform algebraic simplifications, differentiation, integration, solving equations, and other symbolic manipulations based on the parsed mathematical expression. This step leverages the full symbolic capabilities of \texttt{SymPy} to compute exact solutions when possible.
-    \item \textbf{Mathematical Inference:} For problems requiring a numerical solution (such as solving equations), \texttt{SymPy} can use numerical solvers to provide an approximate answer. \texttt{SymPy} supports a wide range of operations, ensuring that the model can handle complex algebraic, calculus, and number-theoretic problems.
-\end{itemize}
-
-This integration ensures that the model not only understands the mathematical structure of the problem but also can derive precise and reliable solutions when applicable.
-
 \subsection{4. Seq2Seq Decoder}
 
 The final step of the architecture involves the use of a Seq2Seq decoder, which generates the natural language output from the symbolic solution obtained from \texttt{SymPy}. The decoder is designed to convert symbolic results back into human-readable text, making the solution interpretable and usable for end-users.
 
 \begin{itemize}
     \item \textbf{Input:} The output from \texttt{SymPy} (whether symbolic or numeric) is used as input to the decoder.
-    \item \textbf{Generation:} The Seq2Seq model is trained to map the symbolic solution into a sequence of natural language words or sentences. This component ensures that the model can output the solution in an understandable and grammatically correct format, whether it's in a step-by-step explanation or a direct final answer.
+    \item \textbf{Generation:} The Seq2Seq model is trained to map the symbolic solution into a sequence of natural language words or sentences. This component ensures that the model can output the solution in an understandable and grammatically correct format.
 \end{itemize}
 
 This step integrates both symbolic manipulation and natural language generation, ensuring that the solution is not only mathematically accurate but also linguistically appropriate.
-
-\subsection{5. Post-processing}
-
-After the Seq2Seq decoder generates the output, a final post-processing step may be applied to format the output into a more user-friendly form. This includes rendering mathematical symbols and expressions in LaTeX or plain text, ensuring that the generated solution is clear, easy to understand, and visually appealing.
-
-\subsection{6. Overall Workflow}
-
-The model operates as follows:
-
-\begin{enumerate}
-    \item \textbf{Input:} A mathematical problem is provided as a LaTeX or natural language string (e.g., "Solve for x: $x^2 + 5x + 6 = 0$").
-    \item \texttt{LaTeX2SymPy} parses the LaTeX expression into a symbolic representation.
-    \item \texttt{MathBERT} processes the tokenized input and encodes it into contextual embeddings.
-    \item \texttt{SymPy} handles the symbolic manipulation and computation to derive the solution.
-    \item \texttt{Seq2Seq Decoder} generates a natural language explanation or final answer based on the symbolic solution.
-    \item \texttt{Post-processing} ensures the final output is formatted and presented to the user.
-\end{enumerate}
 
 \subsection{7. Advantages of the Proposed Architecture}
 
@@ -280,15 +264,15 @@ The hybrid architecture offers several advantages:
 
 
 \section{Model architecture figure}
-Takia
+% Takia
 
-A figure that helps show the overall model or idea. The
-idea is to make your paper more accessible, especially
-to readers who are starting by skimming your paper.
-You must create a new figure, not just use someone
-else's, even with attribution. Be careful that all figure
-text are legible, and are approximately the same size
-as the main text.
+% A figure that helps show the overall model or idea. The
+% idea is to make your paper more accessible, especially
+% to readers who are starting by skimming your paper.
+% You must create a new figure, not just use someone
+% else's, even with attribution. Be careful that all figure
+% text are legible, and are approximately the same size
+% as the main text.
 
 \begin{figure}[htbp]
   \centering
