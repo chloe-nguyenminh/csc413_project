@@ -171,16 +171,16 @@ The MATH dataset \cite{hendrycksmath2021} consists of 12,500 (7,500 training and
 The Numina Math CoT dataset has approximately 860k math problems, where each solution is formatted in a Chain of Thought (CoT) manner. The sources of the dataset range from Chinese high school math exercises to US and international mathematics olympiad competition problems.
 \cite{numina_math_datasets_CoT}
 
-{\bf NuminaMath-TIR}
+% {\bf NuminaMath-TIR}
 
-The Numina Math TIR dataset is a more specific version of the CoT dataset, where 70k problems are selected, with a focus on numerical outputs and integers. Tool-integrated reasoning (TIR) plays a crucial role in this dataset, where the solution to each problem is a sequence of steps that can be executed by a computer program.
-\cite{numina_math_datasets_TIR}
+% The Numina Math TIR dataset is a more specific version of the CoT dataset, where 70k problems are selected, with a focus on numerical outputs and integers. Tool-integrated reasoning (TIR) plays a crucial role in this dataset, where the solution to each problem is a sequence of steps that can be executed by a computer program.
+% \cite{numina_math_datasets_TIR}
 
 \subsection{Data Formatting}
 
 Problems and solutions are formatted using LATEX. The usage of LATEX ensures that the data is easily readable and is easy to parse and process for training the model.
 
-The data for the Math Dataset is formatted as a JSON file, with each problem containing the following fields:
+The data for the MATH Dataset is formatted as a JSON file, with each problem containing the following fields:
 \begin{itemize}
   \item problem: The text of the problem
   \item level: The difficulty level of the problem (Level 1 up to Level 5)
@@ -188,7 +188,7 @@ The data for the Math Dataset is formatted as a JSON file, with each problem con
   \item solution: The solution to the problem
 \end{itemize}
 
-The data for the Numina Math CoT and TIR datasets are formatted as a JSON file, with each problem containing the following fields:
+The data for the Numina Math CoT dataset are formatted as a JSON file, with each problem containing the following fields:
 \begin{itemize}
   \item An array of objects, where the first object contains
       \begin{itemize}
@@ -212,6 +212,10 @@ We converted the data into the following format:
 
 In this way, the features and labels are clearly defined, making it easier to train the model. 
 
+Then, we filtered all foreign characters and symbols (i.e. Chinese characters) from the data to ensure that the model is trained on clean and consistent data. This preprocessing step helps to remove any noise or irrelevant information that could affect the model's performance.
+
+Finally, we tokenized the text data using the MathBERT tokenizer, which is specifically designed for mathematical tasks. This tokenizer splits the input into subword tokens that represent both natural language components and mathematical symbols, enabling the model to process math-related queries effectively.
+
 \subsection{Data Splitting}
 We split the data into training, validation, and test sets. The training set is used to train the model, the validation set is used to tune hyperparameters and prevent overfitting, and the test set is used to evaluate the model's performance on unseen data.
 
@@ -222,8 +226,7 @@ The split is as follows:
   \item Test set: 10\%
 \end{itemize}
 
-
-
+We distributed the Numina CoT dataset across the training, validation, and test sets. However, since the MATH dataset only had 12.5k problems, it was merged with the test set to evaluate the model's performance on a different set of problems.
 
 \section{Model Architecture}
 
