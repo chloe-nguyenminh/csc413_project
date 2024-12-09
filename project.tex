@@ -162,17 +162,16 @@ In this work, we propose a novel approach to algebraic problem solving by incorp
 
 For this project, we decided to use the following datasets:
 
-\href{https://www.kaggle.com/datasets/mathurinache/math-dataset}{{\bf Math Dataset}}
+{\bf Math Dataset}
 
-The MATH dataset consists of 12,500 (7,500 training and 5,000 test) problems from mathematics competitions including the AMC 10, AMC 12, AIME, and more. Many of these problems can be collected from \href{https://artofproblemsolving.com/community/c3158\_usa\_contests}{aops.com/community/c3158\_usa\_contests}.
-\cite{hendrycksmath2021}
+The MATH dataset \cite{hendrycksmath2021} consists of 12,500 (7,500 training and 5,000 test) problems from mathematics competitions including the AMC 10, AMC 12, AIME, and more. Many of these problems can be collected from AoPS Contests. \cite{aops_contests}
 
-\href{https://huggingface.co/datasets/AI-MO/NuminaMath-CoT}{{\bf NuminaMath-CoT}}
+{\bf NuminaMath-CoT}
 
 The Numina Math CoT dataset has approximately 860k math problems, where each solution is formatted in a Chain of Thought (CoT) manner. The sources of the dataset range from Chinese high school math exercises to US and international mathematics olympiad competition problems.
 \cite{numina_math_datasets_CoT}
 
-\href{https://huggingface.co/datasets/AI-MO/NuminaMath-TIR}{{\bf NuminaMath-TIR}}
+{\bf NuminaMath-TIR}
 
 The Numina Math TIR dataset is a more specific version of the CoT dataset, where 70k problems are selected, with a focus on numerical outputs and integers. Tool-integrated reasoning (TIR) plays a crucial role in this dataset, where the solution to each problem is a sequence of steps that can be executed by a computer program.
 \cite{numina_math_datasets_TIR}
@@ -203,7 +202,28 @@ The data for the Numina Math CoT and TIR datasets are formatted as a JSON file, 
       \end{itemize}
 \end{itemize}
 
-We intend to use these datasets to train our model to solve mathematical problems. We will preprocess the data into one format, to ensure that can be used by our model. We will also split the test data into validation and test sets to evaluate the performance of our model.
+\subsection{Data Preprocessing}
+
+We converted the data into the following format:
+\begin{itemize}
+  \item problem: The text of the problem
+  \item solution: The solution to the problem
+\end{itemize}
+
+In this way, the features and labels are clearly defined, making it easier to train the model. 
+
+\subsection{Data Splitting}
+We split the data into training, validation, and test sets. The training set is used to train the model, the validation set is used to tune hyperparameters and prevent overfitting, and the test set is used to evaluate the model's performance on unseen data.
+
+The split is as follows:
+\begin{itemize}
+  \item Training set: 80\%
+  \item Validation set: 10\%
+  \item Test set: 10\%
+\end{itemize}
+
+
+
 
 \section{Model Architecture}
 
