@@ -103,7 +103,7 @@ focused math presents a large learning curve due to the difficulty of
 developing mathematical intuition and a lack of rigorous step by step 
 answers to compare with. We hope to develop an accessible model that can 
 take in a latex text input of a math problem and output a descriptive and accurate latex text answer output to the problem. 
-Developing models capable of solving this task is an infamously difficult problem \cite{Ünsal_Gehr_Vechev_2024} due to the requirement of consistency and mathematical riqour within the answers outputted by the models. 
+Developing models capable of solving this task is an infamously difficult problem \cite{Unsal_Gehr_Vechev_2024} due to the requirement of consistency and mathematical riqour within the answers outputted by the models. 
 \\
 Currently the best models in this area use transformer LLM archetictures with large pretraining datasets. 
 The downsides of these models is that the consistency may be poor due to multiple ways to present the same problem which are treated differently by the model.
@@ -141,9 +141,9 @@ On the other hand, neural networks, particularly deep learning models, excel at 
 
 Recent work has explored the integration of symbolic reasoning within Large Language Models, particularly in the context of mathematical problem solving. A key idea is to augment traditional neural models with external symbolic components that can handle explicit algebraic operations. For example, incorporating \textit{symbolic equation solvers} into a Generative Pretrained Transformer (GPT) allows neural networks to handle more complex algebraic problems \cite{Hu2022Enhancing}. However, GPTs and other Large Language Models are large and not open-source, which makes it challenging for nonprofit educational organizations to conduct research and deploy it effectively due to limited access, high computational costs, and restrictions on customization.
 
-On the other hand, Bidirectional Encoder Representations from Transformers (BERT), originally designed for NLP tasks, has been shown to benefit from fine-tuning on an extensive and diverse mathematical corpuses. Devlin et al. (2024) proposed the finetuning of BERT on mathematical datasets to better understand and solve algebraic problems \cite{DevlinBERT}. Given that BERT and its variants, including mathBERT, are open source, lightweight and accessible to the general public, research and development in extending its current performance would be more easily motivated and conducted. However, to handle more complex mathematical reasoning tasks that involve symbolic manipulation, BERT-based models can be augmented with symbolic reasoning modules that perform operations like solving equations, simplifying expressions, and computing symbolic derivatives. This approach attempts to overcome the limitations of pure neural models by integrating symbolic computations into the reasoning process of the model. 
+On the other hand, Bidirectional Encoder Representations from Transformers (BERT), originally designed for NLP tasks, has been shown to benefit from fine-tuning on an extensive and diverse mathematical corpuses. Devlin et al. (2024) proposed the finetuning of BERT on mathematical datasets to better understand and solve algebraic problems \cite{mathBERT}. Given that BERT and its variants, including mathBERT, are open source, lightweight and accessible to the general public, research and development in extending its current performance would be more easily motivated and conducted. However, to handle more complex mathematical reasoning tasks that involve symbolic manipulation, BERT-based models can be augmented with symbolic reasoning modules that perform operations like solving equations, simplifying expressions, and computing symbolic derivatives. This approach attempts to overcome the limitations of pure neural models by integrating symbolic computations into the reasoning process of the model. 
 
-Recent advances have focused on combining symbolic models with large language models to improve their ability to solve algebraic problems. In the context of BERT and similar models, symbolic models can be incorporated into the encoder-decoder structure, either by pre-processing mathematical inputs with symbolic solvers or by augmenting the model's latent space with symbolic representations that guide its reasoning. For example, the work by Ünsal et al. \cite{Ünsal_Gehr_Vechev_2024} introduces a method where symbolic expressions produced by symbolic models are integrated directly into the attention mechanism of transformer-based models, allowing the network to learn from an accurate chain of subexpressions as part of the mathematical solving procedure as if they were a a paragraph composed of sentences.
+Recent advances have focused on combining symbolic models with large language models to improve their ability to solve algebraic problems. In the context of BERT and similar models, symbolic models can be incorporated into the encoder-decoder structure, either by pre-processing mathematical inputs with symbolic solvers or by augmenting the model's latent space with symbolic representations that guide its reasoning. For example, the work by Ünsal et al. \cite{Unsal_Gehr_Vechev_2024} introduces a method where symbolic expressions produced by symbolic models are integrated directly into the attention mechanism of transformer-based models, allowing the network to learn from an accurate chain of subexpressions as part of the mathematical solving procedure as if they were a a paragraph composed of sentences.
 
 \subsection{Contributions of the Current Work}
 
@@ -171,10 +171,15 @@ The MATH dataset \cite{hendrycksmath2021} consists of 12,500 (7,500 training and
 The Numina Math CoT dataset has approximately 860k math problems, where each solution is formatted in a Chain of Thought (CoT) manner. The sources of the dataset range from Chinese high school math exercises to US and international mathematics olympiad competition problems.
 \cite{numina_math_datasets_CoT}
 
-% {\bf NuminaMath-TIR}
+Here is a breakdown of the math sources in the NuminaMath-CoT dataset:
 
-% The Numina Math TIR dataset is a more specific version of the CoT dataset, where 70k problems are selected, with a focus on numerical outputs and integers. Tool-integrated reasoning (TIR) plays a crucial role in this dataset, where the solution to each problem is a sequence of steps that can be executed by a computer program.
-% \cite{numina_math_datasets_TIR}
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{./figures/math_sources.png}
+  \caption{Distribution of math sources in the NuminaMath-CoT dataset.}
+  \label{fig:math-sources}
+\end{figure}
+
 
 \subsection{Data Formatting}
 
@@ -184,7 +189,7 @@ The data for the MATH Dataset is formatted as a JSON file, with each problem con
 \begin{itemize}
   \item problem: The text of the problem
   \item level: The difficulty level of the problem (Level 1 up to Level 5)
-  \item type: The type of math problem (e.g. algebra, geometry, etc.)
+  \item type: The type of math problem (e.g. Number Theory, Geometry, Algebra, Prealgebra, Counting \& Probability, Precalculus, Intermediate Algebra)
   \item solution: The solution to the problem
 \end{itemize}
 
@@ -257,7 +262,7 @@ This integration ensures that the model not only understands the mathematical st
 
 \subsection{MathBERT Tokenizer and Encoder}
 
-The parsed mathematical expression is fed into a \texttt{MathBERT} tokenizer and encoder, which is a specialized version of BERT fine-tuned for mathematical tasks \cite{mathbert}. MathBERT has been trained to handle both natural language and symbolic mathematical notation, which allows it to effectively process math-related queries and understand the underlying structure of the problem. The steps involved are as follows:
+The parsed mathematical expression is fed into a \texttt{MathBERT} tokenizer and encoder, which is a specialized version of BERT fine-tuned for mathematical tasks \cite{mathBERT}. MathBERT has been trained to handle both natural language and symbolic mathematical notation, which allows it to effectively process math-related queries and understand the underlying structure of the problem. The steps involved are as follows:
 
 \begin{itemize}
     \item \textbf{Tokenization:} The \texttt{MathBERT} tokenizer splits the input into subword tokens that represent both natural language components and mathematical symbols. This step is crucial for handling mixed inputs such as text-based questions and mathematical formulas.
