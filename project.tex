@@ -29,6 +29,7 @@
 \usepackage{url}            % simple URL typesetting
 \usepackage{booktabs}       % professional-quality tables
 \usepackage{amsfonts}       % blackboard math symbols
+\usepackage{amsmath}
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
 \usepackage{xcolor}         % colors
@@ -83,7 +84,7 @@
 % motivations and the scope of your project clear so that
 % readers can decide whether they are interested in
 % reading your work.
-  Mathematical problem solving often requires both symbolic manipulation and natural language understanding. In this paper, we propose a hybrid, lightweight, and open-source model that combines symbolic mathematics with deep learning to solve mathematical problems expressed in natural language or LaTeX format. Our approach integrates several powerful components: \texttt{LaTeX2SymPy} for parsing mathematical expressions from LaTeX, \texttt{MathBERT} for tokenizing and encoding both natural language and symbolic math content, \texttt{SymPy} for symbolic computation and exact mathematical solving, and a Seq2Seq decoder for generating natural language output from symbolic results. This architecture allows the model to handle complex mathematical reasoning tasks, from simple algebraic equations to advanced calculus, while providing accurate and interpretable solutions. The model is efficient, scalable, and entirely open-source, enabling easy integration into educational tools, computational software, and research applications. We demonstrate that our hybrid model leverages the strengths of both symbolic and neural approaches to deliver a more robust solution for automated math problem-solving.
+  Mathematical problem solving often requires both symbolic manipulation and natural language understanding. In this paper, we propose a hybrid, lightweight, and open-source model that combines reason-based mathematics with deep learning to solve mathematical problems expressed in natural language or LaTeX format. Our approach integrates several powerful components:\texttt{MathBERT} for tokenizing and encoding both natural language and symbolic math content and a T5 architecture featuring a encoder decoder structure to generate a natural language output. This architecture allows the model to handle complex mathematical reasoning tasks, from simple algebraic equations to advanced calculus, while providing accurate and interpretable solutions. The model is efficient, scalable, and entirely open-source, enabling easy integration into educational tools, computational software, and research applications. We demonstrate that our  model leverages the strengths of neural approaches to deliver a more robust solution for automated math problem-solving.
   \end{abstract}
 \section{Introduction}
 % Gabriel
@@ -99,11 +100,11 @@
 
 A common challenge faced by students in computational sciences is developing the ability to solve mathematically intensive and logically demanding problems. The transition from computation-oriented mathematics to reasoning-based approaches often presents a significant learning curve, primarily due to the difficulty in cultivating mathematical intuition and the limited availability of detailed, step-by-step solutions for comparison. This work aims to address these gaps by designing an accessible model capable of taking a LaTeX-formatted mathematical problem as input and producing a descriptive, rigorous LaTeX-formatted solution.
 
-The development of models that excel in mathematical problem solving is recognized as a highly challenging task, largely due to the dual demands of consistency and mathematical rigor in generated outputs \cite{Unsal_Gehr_Vechev_2024}. Current state-of-the-art models, such as DeepMind's FunSearch \cite{romera-paredes2024mathematical} and OpenAI's O1 \cite{openai2024o1preview}, leverage large-scale transformer-based language models (LLMs) pretrained on extensive datasets. These models often incorporate symbolic reasoning tools—e.g., the FunSearch algorithm in DeepMind's framework—to enhance their problem-solving capabilities. However, these approaches face notable limitations, including inconsistent outputs caused by varied representations of the same problem, which the models may interpret and solve differently. 
+The development of models that excel in mathematical problem solving is recognized as a highly challenging task, largely due to the dual demands of consistency and mathematical rigor in generated outputs \cite{Unsal_Gehr_Vechev_2024}. Current state-of-the-art models, such as DeepMind's FunSearch \cite{romera-paredes2024mathematical} and OpenAI's O1 \cite{openai2024o1preview}, leverage large-scale transformer-based language models (LLMs) pretrained on extensive datasets. These models often incorporate symbolic reasoning tools, e.g., the FunSearch algorithm in DeepMind's framework, to enhance their problem-solving capabilities. However, these approaches face notable limitations, including inconsistent outputs caused by varied representations of the same problem, computationally expensive to train, and closed-source architecture information and training data.
 
-To address these shortcomings, we propose an transformer-based architecture utilizing pretrained mathBERT embeddings with  the T5 architecture \cite{raffel2023exploringlimitstransferlearning}. This approach seeks to create a high performance model using transfer learning with well researched neural network architecture. 
+To address these shortcomings, we propose an open source transformer-based architecture that uses pre-trained mathBERT embeddings with the T5 architecture \cite{raffel2023exploringlimitstransferlearning}. This approach seeks to create a high performance model using transfer learning through the use of neural network architecture. 
 
-Our work also outlines key evaluation metrics, including precision in output solutions, logical coherence, and consistency across varying problem representations. We plan to benchmark our model against existing systems, such as FunSearch and OpenAI's GPT variants, using datasets like the MATH benchmark and additional datasets tailored for symbolic reasoning tasks. Through this effort, we aim to provide a reliable and user-friendly tool capable of delivering step-by-step feedback and reasoning for diverse mathematical queries.
+Our work also outlines key evaluation metrics, including precision in output solutions, logical coherence, and consistency across varying problem representations. We plan to benchmark our model against existing systems, such as FunSearch, using datasets like the MATH benchmark and additional datasets tailored for symbolic reasoning tasks. Through this effort, we aim to provide a reliable and user-friendly tool capable of delivering step-by-step feedback and reasoning for diverse mathematical queries.
  \section{Background and Related Work}
 % Chloe
 
@@ -121,27 +122,25 @@ Our work also outlines key evaluation metrics, including precision in output sol
 % project. Using bibtex is annoying at first, but Google
 % Scholar can give you the bibtex entries.
 
-The application of large language models (LLMs) such as BERT \cite{mathBERT} and GPT \cite{Brown_et_al._2020} has revolutionized the field of natural language processing (NLP). These transformer-based models excel at a wide range of tasks, including text classification, question answering, and translation. However, when it comes to mathematical reasoning and algebraic problem solving, LLMs often face challenges due to their primary design focusing on natural language rather than symbolic or mathematical computation.
+The application of large language models (LLMs) such as BERT \cite{mathBERT} and GPT \cite{Brown_et_al._2020} has revolutionized the field of natural language processing (NLP). These transformer-based models excel at a wide range of tasks, including text classification, question answering, and translation. However, when it comes to mathematical reasoning and algebraic problem solving, LLMs often face challenges due to their primary design focusing on natural language processing rather than formal mathematical computations.
 
-To address this, there has been increasing interest in integrating symbolic reasoning capabilities into neural architectures. Symbolic models are traditionally used for tasks that require formal manipulation of symbols, such as equation solving, logical inference, and symbolic differentiation. Recent efforts have focused on combining the power of neural networks with symbolic reasoning systems to enhance the models' performance on tasks that involve mathematics or formal logic.
+Recent work has explored enhancing the mathematical capabilities of LLMs by fine-tuning them on large, diverse mathematical corpora. For instance, BERT, originally designed for NLP tasks, has been shown to benefit from such fine-tuning to improve its ability to understand and solve algebraic problems \cite{mathBERT}. Given that BERT and its variants are open source, lightweight, and accessible, they offer a promising avenue for advancing research in mathematical reasoning, as they can be easily customized for a range of tasks.
 
-\subsection{The Role of Symbolic Models in Mathematical Reasoning}
+\subsection{Challenges in Mathematical Reasoning for LLMs}
 
-Symbolic models have long been a central tool in areas such as algebra, calculus, and theorem proving. These models represent mathematical objects (e.g., variables, equations, operators) explicitly and can apply algebraic rules, differentiation, integration, and other symbolic operations directly to manipulate these objects. However, traditional symbolic approaches face scalability issues when dealing with large, unstructured datasets, such as those encountered in real-world mathematical problem solving. 
+Although deep learning models, particularly transformers, are effective at processing unstructured data like natural language, they often struggle with tasks requiring structured reasoning, such as solving algebraic equations or performing symbolic manipulation. The primary limitation stems from the fact that transformers, by design, do not explicitly encode mathematical operations or algebraic logic. Instead, they learn patterns from data, which can sometimes lead to difficulties in reasoning through complex step-by-step processes required for tasks like equation solving.
 
-On the other hand, neural networks, particularly deep learning models, excel at processing unstructured data like natural language and images. Yet, they often struggle with the step-by-step logical reasoning required for tasks like algebraic equation solving or symbolic manipulation due to their inability to explicitly model mathematical operations. This limitation has motivated research into hybrid approaches that combine the benefits of both symbolic models and neural architectures.
+To address these challenges, recent approaches have focused on fine-tuning transformer models on mathematical datasets to help them develop an understanding of mathematical operations and structures. While these models have made progress in handling algebraic expressions, more complex mathematical reasoning tasks, such as multi-step problem solving and manipulation of algebraic terms, still present challenges.
 
-\subsection{Integration of Symbolic Models into Transformer-based Architecture}
+\subsection{Enhancements in Transformer-based Architectures for Mathematical Reasoning}
 
-Recent work has explored the integration of symbolic reasoning within Large Language Models, particularly in the context of mathematical problem solving. A key idea is to augment traditional neural models with external symbolic components that can handle explicit algebraic operations. For example, incorporating \textit{symbolic equation solvers} into a Generative Pretrained Transformer (GPT) allows neural networks to handle more complex algebraic problems \cite{Hu2022Enhancing}. However, GPTs and other Large Language Models are large and not open-source, which makes it challenging for nonprofit educational organizations to conduct research and deploy it effectively due to limited access, high computational costs, and restrictions on customization.
+In this context, transformer-based architectures, such as BERT, have been increasingly used for algebraic reasoning tasks. Fine-tuning models on mathematical datasets allows them to develop an understanding of algebraic relationships, helping them solve equations and simplify expressions. These models benefit from the generalization capabilities of large-scale transformers, which can adapt to a variety of mathematical problems through training on diverse datasets.
 
-On the other hand, Bidirectional Encoder Representations from Transformers (BERT), originally designed for NLP tasks, has been shown to benefit from fine-tuning on an extensive and diverse mathematical corpuses. Devlin et al. (2024) proposed the finetuning of BERT on mathematical datasets to better understand and solve algebraic problems \cite{mathBERT}. Given that BERT and its variants, including mathBERT, are open source, lightweight and accessible to the general public, research and development in extending its current performance would be more easily motivated and conducted. However, to handle more complex mathematical reasoning tasks that involve symbolic manipulation, BERT-based models can be augmented with symbolic reasoning modules that perform operations like solving equations, simplifying expressions, and computing symbolic derivatives. This approach attempts to overcome the limitations of pure neural models by integrating symbolic computations into the reasoning process of the model. 
-
-Recent advances have focused on combining symbolic models with large language models to improve their ability to solve algebraic problems. In the context of BERT and similar models, symbolic models can be incorporated into the encoder-decoder structure, either by pre-processing mathematical inputs with symbolic solvers or by augmenting the model's latent space with symbolic representations that guide its reasoning. For example, the work by Ünsal et al. \cite{Unsal_Gehr_Vechev_2024} introduces a method where symbolic expressions produced by symbolic models are integrated directly into the attention mechanism of transformer-based models, allowing the network to learn from an accurate chain of subexpressions as part of the mathematical solving procedure as if they were a a paragraph composed of sentences.
+In particular, BERT and its variants, including mathBERT \cite{mathBERT}, have been shown to excel in mathematical reasoning tasks when fine-tuned on a corpus of algebraic problems. Unlike earlier models, these transformers learn the contextual dependencies between mathematical terms and operators, which helps them understand complex expressions and perform the necessary operations to solve equations or simplify expressions. The flexibility and accessibility of these models make them an attractive solution for educational and research purposes, allowing for greater experimentation and customization.
 
 \subsection{Contributions of the Current Work}
 
-In this work, we propose a novel approach to algebraic problem solving by incorporating a symbolic model into the BERT encoder. We aim to enhance the BERT architecture with an external symbolic solver that can manipulate algebraic expressions, perform equation solving, and reason about mathematical objects symbolically. By integrating these symbolic capabilities directly into the BERT encoder, we hypothesize that the model will achieve improved performance on algebraic problem-solving tasks, enabling it to generate both correct and interpretable solutions to complex algebraic problems. Our work builds on recent advances in symbolic-augmented language models and aims to push the boundaries of what is achievable in algebraic reasoning within LLMs.
+In this work, we propose an enhanced transformer-based approach to algebraic problem solving by leveraging the BERT encoder and fine-tuning it on a large mathematical corpus. Our approach focuses on developing a model that can handle complex algebraic reasoning tasks by training the model to understand and manipulate algebraic expressions effectively. We hypothesize that by extending BERT's architecture to better model mathematical reasoning, our model will achieve improved performance on a range of algebraic problem-solving tasks, generating both accurate and interpretable solutions. This work contributes to the growing body of research aimed at advancing LLMs' ability to handle mathematical problem solving, pushing the boundaries of what is achievable in algebraic reasoning within LLMs.
 
 
 \section{Data}
@@ -229,30 +228,97 @@ We distributed the Numina CoT dataset across the training, validation, and test 
 
 \section{Model Architecture}
 
-The proposed model aims to combine the strengths of symbolic math-solving with neural language understanding by utilizing a hybrid architecture that integrates \texttt{LaTeX2SymPy} for parsing mathematical expressions, the \texttt{mathBERT} tokenizer and encoder for understanding the natural language problem, \texttt{SymPy} for symbolic manipulation and computation, and a Seq2Seq decoder for generating textual output. The architecture is designed to be lightweight, efficient, and open-source, making it accessible for deployment in a wide range of applications.
+The model architecture is based on the T5 Transformer framework utilizing mathBERTs tokenizer and embeddings, designed to process and generate sequences efficiently. This model leverages a modular design consisting of an encoder-decoder structure tailored for natural language understanding and generation tasks. The architecture is parameterized to balance computational efficiency and performance, making it adaptable to various downstream applications.
 
-\subsection{Input Layer: LaTeX2SymPy Parsing}
+\subsection{Encoder}
 
-The input to the model is a natural language mathematical problem, often expressed in LaTeX format. To handle the structured mathematical expressions present in LaTeX format, we use \texttt{LaTeX2SymPy}. This component parses the LaTeX input into a symbolic expression that can be processed by the subsequent layers.
-
+The encoder is responsible for processing the input sequence and encoding it into a high-dimensional representation that captures its semantic and syntactic structure. It consists of a stack of $N$ identical layers, where each layer has the following components:
 \begin{itemize}
-    \item \textbf{LaTeX Parsing:} Convert LaTeX-based input strings into tokenized symbolic expressions.
-    \item \textbf{Symbolic Representation:} Map the parsed LaTeX expressions into \texttt{SymPy} objects, which represent mathematical terms, operators, and functions in a format suitable for algebraic manipulation.
+    \item \textbf{Multi-Head Self-Attention:} Captures dependencies across all positions in the input sequence, allowing the model to focus on relevant tokens regardless of their distance. The scaled dot-product attention mechanism is computed as:
+    \[
+    \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}\right)V,
+    \]
+    where $Q$, $K$, and $V$ represent the query, key, and value matrices, respectively.
+    \item \textbf{Feed-Forward Network (FFN):} Applies two linear transformations separated by a ReLU activation, enabling non-linear feature learning. The FFN is parameterized as:
+    \[
+    \text{FFN}(x) = \text{ReLU}(xW_1 + b_1)W_2 + b_2.
+    \]
+    \item \textbf{Layer Normalization and Residual Connections:} Layer normalization ensures numerical stability, while residual connections facilitate gradient flow during training.
 \end{itemize}
 
-This parsing step ensures that the mathematical problem is represented in a structured and mathematically accurate form, making it ready for further symbolic operations.
+Each layer in the encoder outputs a contextualized representation for every token in the input sequence.
 
-\subsection{SymPy Solver}
+\subsection{Decoder}
 
-Once the problem is tokenized and embedded by the MathBERT encoder, it is passed to the \texttt{SymPy} Solver for symbolic computation. \texttt{SymPy} is a Python library dedicated to symbolic mathematics, and its role in this architecture is twofold:
-
+The decoder generates the target sequence one token at a time, conditioned on both the encoder outputs and the previously generated tokens. Similar to the encoder, it consists of $M$ identical layers with additional mechanisms to incorporate encoder information:
 \begin{itemize}
-    \item \textbf{Symbolic Manipulation:} \texttt{SymPy} is used to perform algebraic simplifications, differentiation, integration, solving equations, and other symbolic manipulations based on the parsed mathematical expression. This step leverages the full symbolic capabilities of \texttt{SymPy} to compute exact solutions when possible.
-    \item \textbf{Mathematical Inference:} For problems requiring a numerical solution (such as solving equations), \texttt{SymPy} can use numerical solvers to provide an approximate answer. \texttt{SymPy} supports a wide range of operations, ensuring that the model can handle complex algebraic, calculus, and number-theoretic problems.
-    \item \textbf{Generation of Subexpressions} The SymPy solver processes a given function one step at a time. To simulate the process of arriving at a mathematical solution, we feed the given expression into SymPy, then repeatedly feed the output expression into the SymPy until a solution is arrived. The generated subexpressions are sequentially concatenated in the order that they are produced, and the final string is passed into the tokenizer. The goal is for the model to not only learn the positional embeddings and the underlying relations behind the word and mathematical expression parts of a given problem, but also to learn the explicit steps leading up to the solution. 
+    \item \textbf{Masked Multi-Head Self-Attention:} Ensures that predictions at position $t$ depend only on tokens up to $t-1$ by masking future positions in the attention computation.
+    \item \textbf{Cross-Attention:} Attends to the encoder's outputs to integrate contextual information from the input sequence. The attention mechanism operates on the encoder's key-value pairs and the decoder's queries.
+    \item \textbf{Feed-Forward Network:} Identical to the encoder's FFN, applied to each decoder layer.
 \end{itemize}
 
-This integration ensures that the model not only understands the mathematical structure of the problem but also can derive precise and reliable solutions when applicable.
+The decoder outputs logits for the target vocabulary, which are transformed into probabilities using a softmax layer.
+
+\subsection{Positional Encoding}
+
+Since transformers lack an inherent notion of sequence order, positional encodings are added to the token embeddings to incorporate positional information. The positional encoding vector is defined as:
+\[
+PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right), \quad PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right),
+\]
+where $pos$ is the position and $i$ is the dimension index.
+
+\subsection{Training Objective}
+
+The model is trained using a cross-entropy loss function, defined as:
+\[
+\mathcal{L} = -\sum_{t=1}^T y_t \log p(y_t|y_{<t}, x),
+\]
+where $y_t$ is the target token at time $t$, and $p(y_t|y_{<t}, x)$ is the predicted probability of $y_t$ given the input sequence $x$ and previously generated tokens.
+
+\subsection{Parameterization}
+
+The model's configuration includes:
+\begin{itemize}
+    \item \textbf{Hidden Dimension ($d_{\text{model}}$):} 768.
+    \item \textbf{Number of Attention Heads:} 8.
+    \item \textbf{Feed-Forward Dimension ($d_{\text{ff}}$):} 2048.
+    \item \textbf{Number of Encoder Layers:} 6.
+    \item \textbf{Number of Decoder Layers:} 6.
+    \item \textbf{Dropout Rate:} 0.1.
+\end{itemize}
+
+This configuration results in a model with approximately 220 million parameters.
+
+% \subsection{Implementation Details}
+
+% The model is implemented in PyTorch, leveraging Hugging Face's Trainer API for training. It supports mixed-precision training and is optimized using AdamW with a learning rate schedule.
+
+
+
+% The proposed model aims to combine the strengths of symbolic math-solving with neural language understanding by utilizing a hybrid architecture that integrates \texttt{LaTeX2SymPy} for parsing mathematical expressions, the \texttt{mathBERT} tokenizer and encoder for understanding the natural language problem, \texttt{SymPy} for symbolic manipulation and computation, and a Seq2Seq decoder for generating textual output. The architecture is designed to be lightweight, efficient, and open-source, making it accessible for deployment in a wide range of applications.
+
+% \subsection{Input Layer: LaTeX2SymPy Parsing}
+
+% The input to the model is a natural language mathematical problem, often expressed in LaTeX format. To handle the structured mathematical expressions present in LaTeX format, we use \texttt{LaTeX2SymPy}. This component parses the LaTeX input into a symbolic expression that can be processed by the subsequent layers.
+
+% \begin{itemize}
+%     \item \textbf{LaTeX Parsing:} Convert LaTeX-based input strings into tokenized symbolic expressions.
+%     \item \textbf{Symbolic Representation:} Map the parsed LaTeX expressions into \texttt{SymPy} objects, which represent mathematical terms, operators, and functions in a format suitable for algebraic manipulation.
+% \end{itemize}
+
+% This parsing step ensures that the mathematical problem is represented in a structured and mathematically accurate form, making it ready for further symbolic operations.
+
+% \subsection{SymPy Solver}
+
+% Once the problem is tokenized and embedded by the MathBERT encoder, it is passed to the \texttt{SymPy} Solver for symbolic computation. \texttt{SymPy} is a Python library dedicated to symbolic mathematics, and its role in this architecture is twofold:
+
+% \begin{itemize}
+%     \item \textbf{Symbolic Manipulation:} \texttt{SymPy} is used to perform algebraic simplifications, differentiation, integration, solving equations, and other symbolic manipulations based on the parsed mathematical expression. This step leverages the full symbolic capabilities of \texttt{SymPy} to compute exact solutions when possible.
+%     \item \textbf{Mathematical Inference:} For problems requiring a numerical solution (such as solving equations), \texttt{SymPy} can use numerical solvers to provide an approximate answer. \texttt{SymPy} supports a wide range of operations, ensuring that the model can handle complex algebraic, calculus, and number-theoretic problems.
+%     \item \textbf{Generation of Subexpressions} The SymPy solver processes a given function one step at a time. To simulate the process of arriving at a mathematical solution, we feed the given expression into SymPy, then repeatedly feed the output expression into the SymPy until a solution is arrived. The generated subexpressions are sequentially concatenated in the order that they are produced, and the final string is passed into the tokenizer. The goal is for the model to not only learn the positional embeddings and the underlying relations behind the word and mathematical expression parts of a given problem, but also to learn the explicit steps leading up to the solution. 
+% \end{itemize}
+
+% This integration ensures that the model not only understands the mathematical structure of the problem but also can derive precise and reliable solutions when applicable.
 
 \subsection{MathBERT Tokenizer and Encoder}
 
@@ -263,27 +329,22 @@ The parsed mathematical expression is fed into a \texttt{MathBERT} tokenizer and
     \item \textbf{Contextual Embedding:} The tokenized input is passed through the \texttt{MathBERT} encoder, which generates contextual embeddings for each token. These embeddings capture semantic relationships between mathematical operations, variables, and their corresponding natural language descriptions. The encoder's attention mechanism enables the model to focus on relevant parts of the input when generating solutions.
 \end{itemize}
 
-\subsection{Seq2Seq Decoder}
+% \subsection{Seq2Seq Decoder}
 
-The final step of the architecture involves the use of a Seq2Seq decoder, which generates the natural language output from the symbolic solution obtained from \texttt{SymPy}. The decoder is designed to convert symbolic results back into human-readable text, making the solution interpretable and usable for end-users.
+% The final step of the architecture involves the use of a Seq2Seq decoder, which generates the natural language output from the symbolic solution obtained from \texttt{SymPy}. The decoder is designed to convert symbolic results back into human-readable text, making the solution interpretable and usable for end-users.
 
-\begin{itemize}
-    \item \textbf{Input:} The output from \texttt{SymPy} (whether symbolic or numeric) is used as input to the decoder.
-    \item \textbf{Generation:} The Seq2Seq model is trained to map the symbolic solution into a sequence of natural language words or sentences. This component ensures that the model can output the solution in an understandable and grammatically correct format.
-\end{itemize}
+% \begin{itemize}
+%     \item \textbf{Input:} The output from \texttt{SymPy} (whether symbolic or numeric) is used as input to the decoder.
+%     \item \textbf{Generation:} The Seq2Seq model is trained to map the symbolic solution into a sequence of natural language words or sentences. This component ensures that the model can output the solution in an understandable and grammatically correct format.
+% \end{itemize}
 
 This step integrates both symbolic manipulation and natural language generation, ensuring that the solution is not only mathematically accurate but also linguistically appropriate.
 
 \subsection{Advantages of the Proposed Architecture}
 
-The hybrid architecture offers several advantages:
+The BERT-based T5 architecture for algebraic problem-solving offers several advantages:
 
-\begin{itemize}
-    \item \textbf{Hybrid Approach:} The combination of symbolic computation (via \texttt{SymPy}) and deep learning (via \texttt{MathBERT} and Seq2Seq) leverages the strengths of both methods, enabling the model to handle complex mathematical reasoning and natural language understanding simultaneously.
-    \item \textbf{Lightweight and Efficient:} The model is designed to be efficient by using pre-trained BERT embeddings and leveraging \texttt{SymPy} for exact symbolic computation, reducing the need for large-scale numerical solvers or extensive training data.
-    \item \textbf{Open Source:} All components of the model (\texttt{SymPy}, \texttt{MathBERT}, Seq2Seq, and \texttt{LaTeX2SymPy}) are open-source, ensuring transparency, reproducibility, and accessibility.
-    \item \textbf{Scalability:} The model can handle a wide variety of mathematical problems, from basic algebra to more advanced calculus and number theory, making it suitable for a range of educational and professional applications.
-\end{itemize}
+\begin{itemize} \item \textbf{Transformer-based Approach:} By leveraging the pre-trained BERT embeddings and fine-tuning on large mathematical corpora, the model can learn to handle complex algebraic reasoning tasks, such as solving equations and simplifying expressions, while maintaining strong natural language understanding capabilities. \item \textbf{Lightweight and Efficient:} The model utilizes pre-trained embeddings with a highly modular and adjustable T5 architecture, which enables efficient fine-tuning on specific mathematical tasks. This approach reduces the need for large-scale numerical solvers or the complexity of symbolic computation, making it more computationally efficient. \item \textbf{Open Source:} All components of the model, including BERT and its variants like mathBERT, are open-source, ensuring transparency, reproducibility, and accessibility for further research and development in mathematical problem-solving. \item \textbf{Scalability:} The model is highly scalable and can be adapted to solve a wide range of mathematical problems, from basic algebra to more complex algebraic reasoning tasks. This makes it suitable for both educational and professional applications. \end{itemize}
 
 
 \section{Model architecture figure}
