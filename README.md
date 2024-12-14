@@ -27,5 +27,5 @@ The repository includes code, experimental results, and analysis.
 
 ## Contributions
 
-This project was developed by as a collaborative effort as part of the CSC413 coursework. 
+This project was developed in a collaborative effort as part of our CSC413 coursework. 
 
