@@ -8,8 +8,7 @@ This repository contains the final project for CSC413, where we develop a hybrid
 Mathematical reasoning is a complex task that requires both comprehension of mathematical language and problem-solving skills. By combining Math-BERT's ability to understand mathematical expressions and T5's general-purpose reasoning capabilities, this project aims to create a hybrid model capable of tackling:
 
 - Mathematical equation solving
-- Proof generation
-- Word problem analysis
+- Math word problem analysis
 
 The repository includes code, experimental results, and analysis.
 
