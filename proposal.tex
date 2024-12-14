@@ -96,20 +96,13 @@
 % model and the format of the input and output. This
 % section should also make it clear why your deep
 % learning approach is reasonable for this problem.
-A challenge often faced by students in the computational sciences 
-is learning how to solve logically intensive math questions. 
-Often times the transition from computation focused math to reasoning 
-focused math presents a large learning curve due to the difficulty of 
-developing mathematical intuition and a lack of rigorous step by step 
-answers to compare with. We hope to develop an accessible model that can 
-take in a latex text input of a math problem and output a descriptive and accurate latex text answer output to the problem. 
-Developing models capable of solving this task is an infamously difficult problem \cite{Ünsal_Gehr_Vechev_2024} due to the requirement of consistency and mathematical riqour within the answers outputted by the models. 
-\\
-Currently the best models in this area use transformer LLM archetictures with large pretraining datasets. 
-The downsides of these models is that the consistency may be poor due to multiple ways to present the same problem which are treated differently by the model.
-To solve for this we are incorporating a symbolic model into a transformer LLM architecture to hopefully increase accuracy within our math solving model.
- We believe this deep learning approach is reasonable as understanding the language of math problems is something suited for transformer LLM models and creating consistency in mathematical reasoning is something that symbolic models are good at. By combining these 2 approaches we hope that it will combine the best of both architectures.  With this work we hope to develop a more robust and helpful model that is able to answer with reason and provide thorough feedback on math questions potential users might have.
+A common challenge faced by students in computational sciences is developing the ability to solve mathematically intensive and logically demanding problems. The transition from computation-oriented mathematics to reasoning-based approaches often presents a significant learning curve, primarily due to the difficulty in cultivating mathematical intuition and the limited availability of detailed, step-by-step solutions for comparison. This work aims to address these gaps by designing an accessible model capable of taking a LaTeX-formatted mathematical problem as input and producing a descriptive, rigorous LaTeX-formatted solution.
 
+The development of models that excel in mathematical problem solving is recognized as a highly challenging task, largely due to the dual demands of consistency and mathematical rigor in generated outputs \cite{Unsal_Gehr_Vechev_2024}. Current state-of-the-art models, such as DeepMind's FunSearch \cite{romera-paredes2024mathematical} and OpenAI's O1 \cite{openai2024o1preview}, leverage large-scale transformer-based language models (LLMs) pretrained on extensive datasets. These models often incorporate symbolic reasoning tools—e.g., the FunSearch algorithm in DeepMind's framework—to enhance their problem-solving capabilities. However, these approaches face notable limitations, including inconsistent outputs caused by varied representations of the same problem, which the models may interpret and solve differently. 
+
+To address these shortcomings, we propose an transformer-based architecture utilizing pretrained mathBERT embeddings with  the T5 architecture \cite{raffel2023exploringlimitstransferlearning}. This approach seeks to create a high performance model using transfer learning with well researched neural network architecture. 
+
+Our work also outlines key evaluation metrics, including precision in output solutions, logical coherence, and consistency across varying problem representations. We plan to benchmark our model against existing systems, such as FunSearch and OpenAI's GPT variants, using datasets like the MATH benchmark and additional datasets tailored for symbolic reasoning tasks. Through this effort, we aim to provide a reliable and user-friendly tool capable of delivering step-by-step feedback and reasoning for diverse mathematical queries.
  \section{Background and Related Work}
 % Chloe
 
