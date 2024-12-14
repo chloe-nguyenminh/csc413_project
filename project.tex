@@ -389,7 +389,7 @@ The encoder is the core component of our architecture that processes input embed
   \label{fig:decoder}
 \end{figure}
 
-The decoder transforms contextual representations from the encoder into meaningful outputs, It consists of [X] stacked decoder blocks, each processing the output from the previous block. Each block includes a self-attention layer to capture relationships within the target sequence, a cross-attention layer to focus on relevant encoder outputs, and a feed-forward layer (FFN) for further refinement. After each layer, add \& norm and dropout are applied for stability and regularization.
+The decoder transforms contextual representations from the encoder into meaningful outputs, It consists of 6 stacked decoder blocks, each processing the output from the previous block. Each block includes a self-attention layer to capture relationships within the target sequence, a cross-attention layer to focus on relevant encoder outputs, and a feed-forward layer (FFN) for further refinement. After each layer, add \& norm and dropout are applied for stability and regularization.
 
 \begin{figure}[htbp]
   \centering
