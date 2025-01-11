@@ -15,10 +15,10 @@ The repository includes code, experimental results, and analysis.
 - `notebook/project.ipynb`: This notebook currently contains all of the implementation details, training process, and evaluation results. 
 - **project.pdf**: The final written report on the project.
 
-**Reproducing Results**
+### Reproducing Results
    Follow the instructions in the notebook to reproduce the experiments. Note that our current results are limited to training on a relatively small subset of the available MATH dataset (10,000 out of approximately 670,000 samples) on the Google Colab T4 GPU. 
 
-**Future Directions*
+### Future Directions
    Below are some TODOs that will be implemented in the future to further improve the project:
    - Update the final report according to feedbacks from TAs:
         - Abstract: Include summary of results and limitations of the model.
