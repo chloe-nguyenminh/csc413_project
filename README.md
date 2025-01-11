@@ -1,7 +1,6 @@
-# CSC413 Final Project
-# Math-BERT-T5 Hybrid Model for Mathematical Reasoning
+# MathBERT-T5 Hybrid Model for Mathematical Reasoning
 
-This repository contains the final project for CSC413H5 - Deep Learning and Neural Networks in Fall 2024 at the University of Toronto Mississauga. The project is the development of a hybrid MathBERT-T5 model capable of advanced mathematical reasoning tasks. We aim to leverage the strengths of both MathBERT (optimized for mathematical text understanding) and T5 (text-to-text transformer model) to solve challenging mathematical problems.
+This repository contains the final project for CSC413H5 - Deep Learning and Neural Networks in Fall 2024 at the University of Toronto Mississauga. The project is the development of a hybrid MathBERT-T5 model capable of advanced mathematical reasoning tasks. We aim to leverage the strengths of both MathBERT (optimized for mathematical text understanding) and T5 (text-to-text transformer model) to be able to solve a wide range of mathematical problems.
 
 ## Project Overview
 
